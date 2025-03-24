@@ -1,34 +1,32 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// import React from 'react'
+import { Route, Routes } from "react-router-dom"
+import Home from './pages/Home.jsx'
+import About from './pages/About.jsx'
+import Collection from './pages/Collection.jsx'
+import Contact from './pages/Contact.jsx'
+import Product from './pages/Product.jsx'
+import Cart from './pages/Cart.jsx'
+import Login from './pages/Login.jsx'
+import Orders from './pages/Orders.jsx'
+import PlaceOrder from './pages/PlaceOrder.jsx'
+import Navbar from "./components/Navbar.jsx"
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
+      <Navbar></Navbar>
+      <Routes>
+        <Route path="/login" element={<Login/>} />
+        <Route path="/" element={<Home/>} />
+        <Route path="/collection" element={<Collection/>} />
+        <Route path="/product/:productID" element={<Product/>} />
+        <Route path="/cart" element={<Cart/>} />
+        <Route path="/place-order" element={<PlaceOrder/>} />
+        <Route path="/orders" element={<Orders/>} />
+        <Route path="/contact" element={<Contact/>} />
+        <Route path="/about" element={<About/>} />
+      </Routes>
+    </div>
   )
 }
 

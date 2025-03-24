@@ -1,0 +1,10 @@
+a.active hr {
+ display: block;
+}
+
+.ant-badge-count {
+    top: auto !important; /* Reset default top positioning */
+    bottom: -10px; /* Adjust the bottom value to move it down */
+    right: 0px; /*Keep right as 0 or adjust as per your requirement*/
+    transform: translateY(0); /* Reset any existing vertical transform */
+  }

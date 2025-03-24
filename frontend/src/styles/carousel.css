@@ -1,0 +1,80 @@
+.ant-carousel .slick-prev,
+.ant-carousel .slick-next {
+  color: rgb(0, 0, 0);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.ant-carousel .slick-prev {
+  left: 10px;
+}
+
+.ant-carousel .slick-next {
+  right: 10px;
+}
+
+.ant-carousel .slick-prev::before,
+.ant-carousel .slick-next::before {
+  color: rgb(0, 0, 0);
+}
+
+.carousel-content {
+  height: 450px;
+  color: #fff;
+  text-align: center;
+  background: #f0f2f5;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  border-radius: 15px;
+}
+
+.carousel-content:hover {
+  background: #e0e0e0;
+  transform: scale(1.01);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 15px; /* Keep the curved borders on hover */
+}
+
+.carousel-image {
+  max-width: 50%;
+  height: auto;
+  border-radius: 15px 0px 0px 15px;
+}
+
+.carousel-card {
+  width: 100%;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 15px;
+}
+
+.carousel-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 15px; /* Keep the curved borders on hover */
+}
+
+.carousel-card .ant-card-body {
+  padding: 0;
+}
+
+.carousel-card .text-content {
+  padding: 90px;
+}
+
+.carousel-card .prata-regular {
+  font-family: 'Prata', serif;
+}
+
+.carousel-card img {
+  max-width: 60%;
+  height: 450px;
+  border-radius: 15px 0px 0px 15px;
+}
