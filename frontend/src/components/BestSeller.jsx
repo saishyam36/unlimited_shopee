@@ -13,8 +13,8 @@ const BestSeller = () => {
     setBestSellers(bestProducts.slice(0, 8));
   }, [])
   return (
-    <>
-      <div className="my-10">
+    <div className="my-10">
+      <div className="my-5">
         <div className="text-center py-5">
           <Title text1={'BEST'} text2={'SELLERS'}></Title>
         </div>
@@ -27,7 +27,7 @@ const BestSeller = () => {
           </Col>
         ))}
       </Row>
-    </>
+    </div>
   )
 }
 

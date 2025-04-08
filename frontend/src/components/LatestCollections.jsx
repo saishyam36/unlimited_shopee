@@ -12,8 +12,8 @@ const LatestCollections = () => {
     setLatestProducts(products.slice(0, 8));
   }, [])
   return (
-    <>
-      <div className="my-10">
+    <div className="my-10">
+      <div className="my-5">
         <div className="text-center py-5">
           <Title text1={'LATEST'} text2={'COLLECTIONS'}></Title>
         </div>
@@ -26,7 +26,7 @@ const LatestCollections = () => {
           </Col>
         ))}
       </Row>
-    </>
+    </div>
   )
 }
 
