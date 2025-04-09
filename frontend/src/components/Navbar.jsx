@@ -33,19 +33,19 @@ const Navbar = () => {
         <img src={assets.logo} className="w-36" alt="" />
       </Link>
       <ul className="flex gap-5 text-sm text-gray-700">
-        <NavLink className="flex flex-col items-center gap-1" href="/">
+        <NavLink className="flex flex-col items-center gap-1" to="/">
           <p>HOME</p>
-          <hr className="w-2/4 border-none h-[1.5px] bg-gray-700" />
+          <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden"/>
         </NavLink>
-        <NavLink className="flex flex-col items-center gap-1" href="/collection">
+        <NavLink className="flex flex-col items-center gap-1" to="/collection">
           <p>COLLECTION</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
-        <NavLink className="flex flex-col items-center gap-1" href="/about">
+        <NavLink className="flex flex-col items-center gap-1" to="/about">
           <p>ABOUT</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
-        <NavLink className="flex flex-col items-center gap-1" href="/contact">
+        <NavLink className="flex flex-col items-center gap-1" to="/contact">
           <p>CONTACT</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>

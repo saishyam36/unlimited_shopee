@@ -1,5 +1,3 @@
-// import React from 'react'
-
 import BestSeller from "../components/BestSeller"
 import Carousel from "../components/CarouselDisplay"
 import LatestCollections from "../components/LatestCollections"
