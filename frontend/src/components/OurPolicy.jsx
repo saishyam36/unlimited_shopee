@@ -1,5 +1,4 @@
 import React from 'react'
-import { assets } from '../assets/assets'
 import { Flex } from 'antd'
 import SupportAgentTwoToneIcon from '@mui/icons-material/SupportAgentTwoTone';
 import TaskAltTwoToneIcon from '@mui/icons-material/TaskAltTwoTone';
