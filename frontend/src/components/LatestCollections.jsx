@@ -19,10 +19,13 @@ const LatestCollections = () => {
         </div>
       </div>
 
-      <Row gutter={[10,24]}>
+      <Row gutter={[10, 24]}>
         {latestProducts.map((item) => (
-          <Col flex={"none"} key={`col_${item._id}`} lg={{ span: 6, offset: 0 }} push={2} >
-            <ProductItem  id={item._id} image={item.image} name={item.name} price={item.price}></ProductItem>
+          <Col key={`col_${item._id}`} lg={{ span: 6, offset: 0 }} style={{
+            display: 'flex',
+            justifyContent: 'center',
+          }} >
+            <ProductItem id={item._id} image={item.image} name={item.name} price={item.price}></ProductItem>
           </Col>
         ))}
       </Row>

@@ -1,5 +1,4 @@
 // import React from 'react'
-
 import { useContext, useEffect, useState } from "react"
 import { ShopContext } from "../context/ShopContext"
 import ShopFilters from "../components/ShopFilters";
@@ -10,12 +9,11 @@ import ProductItem from "../components/ProductItem";
 
 const Collection = () => {
   const { products } = useContext(ShopContext);
-
-  const [selectedFilters, setSelectedFilters] = useState([]);
+  const [filters, setFilters] = useState([]);
   const [sortedBy, setSortedBy] = useState('Sort by: Relavent');
   const [filteredProducts, setFilteredProducts] = useState([]);
 
-  console.log(selectedFilters, 'selectedFilters')
+  console.log(filters, 'selectedFilters')
 
   const onSortClick = (e) => {
     const selectedItem = sortItems.find(item => item.key === e.key);
@@ -32,7 +30,7 @@ const Collection = () => {
   return (
     <div>
       <div className="flex flex-row place-content-between py-10">
-        <ShopFilters filterOptions={filterOptions} setSelectedFilters={setSelectedFilters} />
+        <ShopFilters filterOptions={filterOptions} setFilters={setFilters} />
         <div>
           <Dropdown menu={{
             items: sortItems,
@@ -51,8 +49,8 @@ const Collection = () => {
       <div>
         <Row justify="space-between" gutter={[10, 30]}>
           {filteredProducts.map((item) => (
-            <Col span={6} key={`col_${item._id}`}  style={{
-              display: 'flex',         
+            <Col span={6} key={`col_${item._id}`} style={{
+              display: 'flex',
               justifyContent: 'center',
             }}>
               <ProductItem id={item._id} image={item.image} name={item.name} price={item.price} />

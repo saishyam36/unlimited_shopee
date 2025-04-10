@@ -17,8 +17,8 @@ export const sortItems = [
         key: '3',
         label: 'Sort by: High to Low',
     },];
+
 export const filterOptions = [
-    { id: 'categories', title: 'CATEGORIES', items: ['Women', 'Men', 'Kids'] },
-    { id: 'type', title: 'TYPE', items: ['Topwear', 'Bottomwear', 'Winterwear'] },
-    { id: 'color', title: 'Color', items: ['Red', 'Blue', 'Green', 'Black'] },
+    { id: 'category', title: 'CATEGORIES', items: ['Women', 'Men', 'Kids'] },
+    { id: 'subCategory', title: 'TYPE', items: ['Topwear', 'Bottomwear', 'Winterwear'] },
 ];

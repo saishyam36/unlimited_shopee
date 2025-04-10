@@ -15,7 +15,7 @@ import Footer from "./components/Footer.jsx"
 const App = () => {
   return (
     <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
-      <Navbar></Navbar>
+      <Navbar/>
       <Routes>
         <Route path="/login" element={<Login/>} />
         <Route path="/" element={<Home/>} />
