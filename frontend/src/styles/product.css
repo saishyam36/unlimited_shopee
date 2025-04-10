@@ -2,3 +2,8 @@
  .detail-container {
     height: 72px;
   }
+
+  .no-link-spacing {
+    margin: 0 !important; /* Use !important if needed to override other styles */
+    padding: 0 !important;
+  }
