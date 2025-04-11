@@ -28,13 +28,6 @@ const ShopFilters = ({ filterOptions, setFilters }) => {
     const handleOptionClick = (option) => {
         setSelectedOption(option);
     };
-
-    // const handleCheckboxChange = (optionId, checkedValues) => {
-    //     setSelectedFilters(prevState => ({
-    //         ...prevState,
-    //         [optionId]: checkedValues,
-    //     }));
-    // };
     
     const handleCheckboxChange = (e) => {
         const value = e.target.value;

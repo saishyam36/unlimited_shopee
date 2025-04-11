@@ -13,22 +13,20 @@ const Collection = () => {
   const [sortedBy, setSortedBy] = useState(defaultSorting);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
-  console.log(filters, 'selectedFilters')
-
   const onSortClick = (e) => {
     const selectedItem = sortItems.find(item => item.key === e.key);
     if (selectedItem) {
-      setSortedBy(selectedItem.label);
+      setSortedBy(selectedItem.value);
     }
   };
 
-  const filterProducts = (products, filters)=> {
+  const filterProducts = (products, filters) => {
     return products.filter(product => {
       for (const key in filters) {
         if (filters.hasOwnProperty(key)) {
           const filterValues = filters[key];
           const productValue = product[key];
-  
+
           if (filterValues && filterValues.length > 0) {
             if (!filterValues.includes(productValue)) {
               return false; // Product doesn't match the filter for this key
@@ -40,14 +38,30 @@ const Collection = () => {
     });
   }
 
+  const sortProducts = () => {
+    const productsFiltered = filterProducts(products, filters)
+    switch (sortedBy) {
+      case 'Low to High':
+        setFilteredProducts(productsFiltered.sort((a, b) => (a.price - b.price)));
+        break;
+
+      case 'High to Low':
+        setFilteredProducts(productsFiltered.sort((a, b) => (b.price - a.price)));
+        break;
+
+      default:
+        setFilteredProducts(productsFiltered)
+        break;
+    }
+  }
+
   useEffect(() => {
     setFilteredProducts(products)
   }, [])
 
   useEffect(() => {
-    const productsFiltered = filterProducts(products,filters)
-    setFilteredProducts(productsFiltered)
-  }, [filters,setFilters,sortedBy])
+    sortProducts()
+  }, [filters, setFilters, sortedBy])
 
 
   return (
@@ -61,7 +75,7 @@ const Collection = () => {
             defaultSelectedKeys: [sortItems[0].key],
             onClick: onSortClick,
           }} placement="topRight" >
-            <Button>{sortedBy}
+            <Button>Sort by: {sortedBy}
               <KeyboardArrowDownTwoToneIcon />
             </Button>
           </Dropdown>

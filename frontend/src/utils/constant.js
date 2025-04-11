@@ -8,17 +8,20 @@ export const sortItems = [
     {
         key: '1',
         label: 'Sort by: Relavent',
+        value: 'Relavent',
     },
     {
         key: '2',
         label: 'Sort by: Low to High',
+        value: 'Low to High',
     },
     {
         key: '3',
         label: 'Sort by: High to Low',
+        value: 'High to Low',
     },];
 
-export const defaultSorting = 'Sort by: Relavent';
+export const defaultSorting = 'Relavent';
 
 export const filterOptions = [
     { id: 'category', title: 'CATEGORIES', items: ['Women', 'Men', 'Kids'] },
