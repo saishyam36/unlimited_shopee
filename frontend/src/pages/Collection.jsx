@@ -60,8 +60,13 @@ const Collection = () => {
   }, [])
 
   useEffect(() => {
+    setFilteredProducts(filterProducts(products, filters))
+    setSortedBy(defaultSorting)
+  }, [filters, setFilters])
+ 
+  useEffect(() => {
     sortProducts()
-  }, [filters, setFilters, sortedBy])
+  }, [sortedBy])
 
 
   return (
@@ -73,6 +78,7 @@ const Collection = () => {
             items: sortItems,
             selectable: true,
             defaultSelectedKeys: [sortItems[0].key],
+            selectedKeys: [sortItems.filter((item)=> sortedBy===item.value)[0].key],
             onClick: onSortClick,
           }} placement="topRight" >
             <Button>Sort by: {sortedBy}
