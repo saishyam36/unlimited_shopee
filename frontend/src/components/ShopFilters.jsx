@@ -29,19 +29,32 @@ const ShopFilters = ({ filterOptions, setFilters }) => {
         setSelectedOption(option);
     };
 
-    const handleCheckboxChange = (optionId, checkedValues) => {
-        const newValues = [...selectedCheckboxes];
-        checkedValues.forEach(value => {
-            if (!newValues.includes(value)) {
-                newValues.push(value);
-            }
+    // const handleCheckboxChange = (optionId, checkedValues) => {
+    //     setSelectedFilters(prevState => ({
+    //         ...prevState,
+    //         [optionId]: checkedValues,
+    //     }));
+    // };
+    
+    const handleCheckboxChange = (e) => {
+        const value = e.target.value;
+        const isChecked = e.target.checked;
+    
+        setSelectedCheckboxes(prevSelected => {
+          if (isChecked) {
+            return [...prevSelected, value]; // Add value if checked
+          } else {
+            return prevSelected.filter(item => item !== value); // Remove value if unchecked
+          }
         });
-        setSelectedCheckboxes(newValues);
+    
         setSelectedFilters(prevState => ({
-            ...prevState,
-            [optionId]: checkedValues,
+          ...prevState,
+          [selectedOption.id]: isChecked
+            ? [...(prevState[selectedOption.id] || []), value] // Add to selectedFilters if checked
+            : (prevState[selectedOption.id] || []).filter(item => item !== value), // Remove from selectedFilters if unchecked
         }));
-    };
+      };
 
     useEffect(() => {
         if (isModalVisible && filterOptions.length > 0) {
@@ -85,9 +98,9 @@ const ShopFilters = ({ filterOptions, setFilters }) => {
                     {/* Right Side - Checkboxes */}
                     <div style={{ flex: 1 }}>
                         {selectedOption && (
-                            <Checkbox.Group onChange={(changedValues) => handleCheckboxChange(selectedOption.id, changedValues)} value={selectedCheckboxes}>
+                            <Checkbox.Group value={selectedCheckboxes}>
                                 {selectedOption.items.map((item) => (
-                                    <Checkbox key={item} value={item} style={{ display: 'block', marginBottom: '8px' }}>
+                                    <Checkbox onChange={(e)=> handleCheckboxChange(e)} key={item} value={item} style={{ display: 'block', marginBottom: '8px' }}>
                                         {item}
                                     </Checkbox>
                                 ))}
