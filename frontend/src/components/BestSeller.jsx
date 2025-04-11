@@ -20,7 +20,7 @@ const BestSeller = () => {
         </div>
       </div>
 
-      <Row gutter={[10, 24]}>
+      <Row justify="start" gutter={[10, 24]}>
         {BestSellers.map((item) => (
           <Col key={`col_${item._id}`} lg={{ span: 6, offset: 0 }} style={{
             display: 'flex',

@@ -18,6 +18,8 @@ export const sortItems = [
         label: 'Sort by: High to Low',
     },];
 
+export const defaultSorting = 'Sort by: Relavent';
+
 export const filterOptions = [
     { id: 'category', title: 'CATEGORIES', items: ['Women', 'Men', 'Kids'] },
     { id: 'subCategory', title: 'TYPE', items: ['Topwear', 'Bottomwear', 'Winterwear'] },

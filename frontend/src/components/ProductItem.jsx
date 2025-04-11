@@ -8,7 +8,7 @@ import '../styles/product.css'
 const ProductItem = ({ id, image, name, price }) => {
   const { currency } = useContext(ShopContext);
   return (
-    <Link classNameName='text-gray-700 cursor-pointer block' to={`/product/${id}`}>
+    <Link className='text-gray-700 cursor-pointer block' to={`/product/${id}`}>
       <Card
         hoverable
         style={{ width: 260, height: 400 }}

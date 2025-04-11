@@ -11,6 +11,7 @@ const LatestCollections = () => {
   useEffect(() => {
     setLatestProducts(products.slice(0, 8));
   }, [])
+
   return (
     <div className="my-10">
       <div className="my-5">
@@ -19,7 +20,7 @@ const LatestCollections = () => {
         </div>
       </div>
 
-      <Row gutter={[10, 24]}>
+      <Row justify="start" gutter={[10, 24]}>
         {latestProducts.map((item) => (
           <Col key={`col_${item._id}`} lg={{ span: 6, offset: 0 }} style={{
             display: 'flex',

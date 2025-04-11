@@ -4,13 +4,13 @@ import { ShopContext } from "../context/ShopContext"
 import ShopFilters from "../components/ShopFilters";
 import { Button, Col, Dropdown, Row } from "antd";
 import KeyboardArrowDownTwoToneIcon from '@mui/icons-material/KeyboardArrowDownTwoTone';
-import { filterOptions, sortItems } from "../utils/constant";
+import { defaultSorting, filterOptions, sortItems } from "../utils/constant";
 import ProductItem from "../components/ProductItem";
 
 const Collection = () => {
   const { products } = useContext(ShopContext);
   const [filters, setFilters] = useState([]);
-  const [sortedBy, setSortedBy] = useState('Sort by: Relavent');
+  const [sortedBy, setSortedBy] = useState(defaultSorting);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   console.log(filters, 'selectedFilters')
@@ -22,9 +22,32 @@ const Collection = () => {
     }
   };
 
+  const filterProducts = (products, filters)=> {
+    return products.filter(product => {
+      for (const key in filters) {
+        if (filters.hasOwnProperty(key)) {
+          const filterValues = filters[key];
+          const productValue = product[key];
+  
+          if (filterValues && filterValues.length > 0) {
+            if (!filterValues.includes(productValue)) {
+              return false; // Product doesn't match the filter for this key
+            }
+          }
+        }
+      }
+      return true; // Product matches all active filters
+    });
+  }
+
   useEffect(() => {
     setFilteredProducts(products)
   }, [])
+
+  useEffect(() => {
+    const productsFiltered = filterProducts(products,filters)
+    setFilteredProducts(productsFiltered)
+  }, [filters,setFilters,sortedBy])
 
 
   return (
@@ -47,7 +70,7 @@ const Collection = () => {
 
       {/* Map Products */}
       <div>
-        <Row justify="space-between" gutter={[10, 30]}>
+        <Row justify="start" gutter={[10, 30]}>
           {filteredProducts.map((item) => (
             <Col span={6} key={`col_${item._id}`} style={{
               display: 'flex',
