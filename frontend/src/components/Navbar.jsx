@@ -1,7 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import '../styles/navbar.css'
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
-import SearchSharpIcon from '@mui/icons-material/SearchSharp';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import { assets } from "../assets/assets.js";
 import { Badge, Button, Dropdown } from "antd";
@@ -51,7 +50,6 @@ const Navbar = () => {
         </NavLink>
       </ul>
       <div className="flex items-center gap-3">
-        <SearchSharpIcon className="w-5 cursor-pointer" fontSize="medium" alt="" />
         <div className="group relative">
           <Dropdown menu={menuProps} placement="bottom" >
             <Button shape='circle' icon={<PersonOutlinedIcon fontSize='medium' alt="" />} ></Button>
