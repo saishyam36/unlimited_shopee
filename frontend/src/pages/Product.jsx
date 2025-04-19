@@ -5,6 +5,7 @@ import { ShopContext } from "../context/ShopContext";
 import { currency } from "../utils/constant";
 import { Button } from "antd";
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import RelatedProducts from "../components/RelatedProducts";
 
 const Product = () => {
 
@@ -26,7 +27,8 @@ const Product = () => {
 
   useEffect(() => {
     fetchProductData();
-  }, [])
+    setSize('')
+  }, [productID])
 
   return (
     productData ? (
@@ -56,7 +58,7 @@ const Product = () => {
               <p>Select Size</p>
               <div className="flex gap-7">
                 {productData.sizes.map((item, index) => (
-                  <Button on onClick={() => setSize(item)} size="large" key={index} type="default" shape="circle" className={`${item === size ? 'bg-cyan-100' : 'bg-slate-100'}`}>
+                  <Button onClick={() => setSize(item)} size="large" key={index} type="default" shape="circle" className={`${item === size ? 'bg-cyan-100' : 'bg-slate-100'}`}>
                     {item}
                   </Button>
                 ))}
@@ -74,7 +76,7 @@ const Product = () => {
           {/* {TODO : add review code here when added ratings code} */}
           {/* {Display Related Products} */}
           <div>
-            
+            <RelatedProducts category={productData.category} subCategory={productData.subCategory} selectedProductID={productID} /> 
           </div>
       </div>) :
       (<div className="opacity-0"></div>)
