@@ -1,4 +1,13 @@
+.detail-container {
+  height: 72px;
+}
 
- .detail-container {
-    height: 72px;
-  }
+.productError {
+  color: #d84315;
+  padding: 16px 24px;
+  font-weight: 500;
+}
+
+.productError .anticon {
+  padding-right: 5px;
+}
