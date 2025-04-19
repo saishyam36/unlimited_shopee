@@ -27,7 +27,6 @@ const Product = () => {
   }
 
   const handleAddToCart = () => {
-    console.log(size, 'ss')
     if (size !== '') {
       addToCart(productData._id, size)
     } else if (!isErrorVisible) {

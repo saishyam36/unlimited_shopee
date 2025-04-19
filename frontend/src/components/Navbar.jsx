@@ -4,8 +4,11 @@ import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import { assets } from "../assets/assets.js";
 import { Badge, Button, Dropdown } from "antd";
+import { useContext } from "react";
+import { ShopContext } from "../context/ShopContext.jsx";
 
 const Navbar = () => {
+  const { getCartCount } = useContext(ShopContext);
 
   const items = [
     {
@@ -34,7 +37,7 @@ const Navbar = () => {
       <ul className="flex gap-5 text-sm text-gray-700">
         <NavLink className="flex flex-col items-center gap-1" to="/">
           <p>HOME</p>
-          <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden"/>
+          <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
         <NavLink className="flex flex-col items-center gap-1" to="/collection">
           <p>COLLECTION</p>
@@ -56,7 +59,7 @@ const Navbar = () => {
           </Dropdown>
         </div>
         <Link to='/cart' className="relative">
-          <Badge size='small' count={99} color='blue'>
+          <Badge size='small' count={getCartCount()} color='blue' showZero>
             <ShoppingBagOutlinedIcon fontSize="medium" className="w-5 min-w-5" shapeRendering='' >
             </ShoppingBagOutlinedIcon>
           </Badge>
