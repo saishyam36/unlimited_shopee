@@ -4,6 +4,7 @@ import CartTotal from "../components/CartTotal"
 import { assets } from "../assets/assets";
 import PaymentMethodOptions from "../components/PaymentMethodOptions";
 import DeliveryInformationForm from "../components/DeliveryInformationForm";
+import { Button } from "antd";
 
 const PlaceOrder = () => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
@@ -11,7 +12,6 @@ const PlaceOrder = () => {
 
   const handlePaymentSelect = (paymentValue) => {
     setSelectedPaymentMethod(paymentValue);
-    setPlaceButtonDisabled(true)
     console.log('Selected Payment Method:', paymentValue);
     // Implement your logic to handle the selected payment method
   };
@@ -35,17 +35,21 @@ const PlaceOrder = () => {
   ];
 
   return (
-    <div className="flex flex-row justify-between">
+    <div className="flex flex-row justify-between mb-40">
       <div className="flex flex-row flex-1">
-        <DeliveryInformationForm  setPlaceButtonDisabled={setPlaceButtonDisabled}/>
+        <DeliveryInformationForm setPlaceButtonDisabled={setPlaceButtonDisabled} />
       </div>
-      <div className="flex flex-col justify-between flex-1">
+      <div className="flex flex-col justify-start flex-1">
         <CartTotal showCheckout={false} />
         <PaymentMethodOptions
           paymentOptions={paymentMethods}
           onPaymentSelect={handlePaymentSelect}
-          placeOrderIsDisabled={placeButtonDisabled}
         />
+        <div className="flex justify-center mt-10">
+          <Button className="w-[50%]" disabled={selectedPaymentMethod === null || placeButtonDisabled} type="default" color="default" size="small" variant="solid">
+            PLACE ORDER
+          </Button>
+        </div>
       </div>
     </div>
   )
