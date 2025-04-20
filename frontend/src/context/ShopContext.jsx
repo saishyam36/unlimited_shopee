@@ -7,6 +7,8 @@ export const ShopContext = createContext();
 
 const ShopContextProvider = (props) => {
     const [cartItems, setCartItems] = useState({});
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
+    const [orderTime, setOrderTime] = useState(null);
     const navigate = useNavigate();
 
     const addToCart = (itemId, size) => {
@@ -77,10 +79,10 @@ const ShopContextProvider = (props) => {
 
 
     const value = useMemo(() => ({
-        products, currency, deliveryFee, cartItems, addToCart,
-        getCartCount, updateCart, deleteCartItem, getCartAmount, navigate
-    }), [products, currency, deliveryFee, addToCart, cartItems,
-        getCartCount, updateCart, deleteCartItem, getCartAmount, navigate]);
+        products, currency, deliveryFee, cartItems, addToCart, setSelectedPaymentMethod, selectedPaymentMethod,
+        getCartCount, updateCart, deleteCartItem, getCartAmount, navigate, orderTime, setOrderTime
+    }), [products, currency, deliveryFee, addToCart, cartItems, setSelectedPaymentMethod, selectedPaymentMethod,
+        getCartCount, updateCart, deleteCartItem, getCartAmount, navigate, orderTime, setOrderTime]);
 
     return (
         <ShopContext.Provider value={value}>

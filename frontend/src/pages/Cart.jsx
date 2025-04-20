@@ -42,7 +42,7 @@ const Cart = () => {
                         <p className="text-xs sm:text-lg font-mono mb-4">{item.name}</p>
                         <div className="flex items-center gap-5 mt-2">
                           <p className="text-lg font-mono">{currency}{item.price}</p>
-                          <Button size="large" key={index} type="default" shape="circle" className='bg-gray-200 font-mono'>
+                          <Button size="large" key={index} type="default" shape="circle" className='bg-gray-200 text-lg font-mono'>
                             {cartItem.size}
                           </Button>
                         </div>
@@ -59,7 +59,7 @@ const Cart = () => {
                           style={{ width: 100 }}
                           className="mx-5"
                         />
-                        <DeleteOutlinedIcon fontSize="large" onClick={() => handleRemoveItem(item._id, cartItem.size)} className="cursor-pointer" />
+                        <DeleteOutlinedIcon fontSize="medium" onClick={() => handleRemoveItem(item._id, cartItem.size)} className="cursor-pointer" />
                       </Space>
                     </Col>
                   </Row>

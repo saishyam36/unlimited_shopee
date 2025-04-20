@@ -8,9 +8,8 @@ import { Button } from "antd";
 import { ShopContext } from "../context/ShopContext";
 
 const PlaceOrder = () => {
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
   const [placeButtonDisabled, setPlaceButtonDisabled] = useState(false);
-  const { navigate } = useContext(ShopContext);
+  const { navigate, selectedPaymentMethod, setSelectedPaymentMethod, setOrderTime } = useContext(ShopContext);
 
   const handlePaymentSelect = (paymentValue) => {
     setSelectedPaymentMethod(paymentValue);
@@ -47,7 +46,18 @@ const PlaceOrder = () => {
           onPaymentSelect={handlePaymentSelect}
         />
         <div className="flex justify-center mt-10">
-          <Button onClick={() => navigate('/orders')} className="w-[50%]" disabled={selectedPaymentMethod === null || placeButtonDisabled} type="default" color="default" size="small" variant="solid">
+          <Button onClick={() => {
+            navigate('/orders')
+            const today = new Date();
+            const formattedDate = today.toLocaleDateString('en-US', {
+              weekday: 'short',
+              month: 'short',
+              day: 'numeric', 
+              year: 'numeric'  
+            });
+            setOrderTime(formattedDate)
+          }
+          } className="w-[50%]" disabled={selectedPaymentMethod === null || placeButtonDisabled} type="default" color="default" size="small" variant="solid">
             PLACE ORDER
           </Button>
         </div>

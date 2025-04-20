@@ -9,7 +9,7 @@ const PaymentMethodOptions = ({ paymentOptions, onPaymentSelect }) => {
   const handlePaymentChange = (e) => {
     setSelectedPayment(e.target.value);
     if (onPaymentSelect) {
-      onPaymentSelect(e.target.value);
+      onPaymentSelect(paymentOptions.find((option) => option.value === e.target.value).name);
     }
   };
 
@@ -31,7 +31,7 @@ const PaymentMethodOptions = ({ paymentOptions, onPaymentSelect }) => {
                     style={{ height: 20, marginRight: 4 }}
                   />
                 )}
-              {!option.image && (  <Text>{option.name}</Text>)}
+                {!option.image && (<Text>{option.name}</Text>)}
               </div>
             </Radio>
           ))}
