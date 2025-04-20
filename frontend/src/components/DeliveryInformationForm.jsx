@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Form, Input, Typography, Row, Col, Divider } from 'antd';
 
 const { Title } = Typography;
 
 const DeliveryInformationForm = ({ setPlaceButtonDisabled }) => {
   const [form] = Form.useForm();
-  const [allRequiredFilled, setAllRequiredFilled] = useState(false);
-
   const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'street', 'city', 'state', 'zipcode', 'country'];
 
   const onValuesChange = (changedValues, allValues) => {
     const allFilled = requiredFields.every(field => allValues[field]);
-    setAllRequiredFilled(allFilled);
     if (setPlaceButtonDisabled) {
       setPlaceButtonDisabled(!allFilled);
     }
@@ -30,7 +27,6 @@ const DeliveryInformationForm = ({ setPlaceButtonDisabled }) => {
   useEffect(() => {
     const initialValues = form.getFieldsValue(requiredFields);
     const initiallyFilled = requiredFields.every(field => initialValues[field]);
-    setAllRequiredFilled(initiallyFilled);
     if (setPlaceButtonDisabled) {
       setPlaceButtonDisabled(!initiallyFilled);
     }

@@ -1,19 +1,20 @@
 // import React from 'react'
-import { useState } from "react";
+import { useContext, useState } from "react";
 import CartTotal from "../components/CartTotal"
 import { assets } from "../assets/assets";
 import PaymentMethodOptions from "../components/PaymentMethodOptions";
 import DeliveryInformationForm from "../components/DeliveryInformationForm";
 import { Button } from "antd";
+import { ShopContext } from "../context/ShopContext";
 
 const PlaceOrder = () => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
   const [placeButtonDisabled, setPlaceButtonDisabled] = useState(false);
+  const { navigate } = useContext(ShopContext);
 
   const handlePaymentSelect = (paymentValue) => {
     setSelectedPaymentMethod(paymentValue);
     console.log('Selected Payment Method:', paymentValue);
-    // Implement your logic to handle the selected payment method
   };
 
   const paymentMethods = [
@@ -46,7 +47,7 @@ const PlaceOrder = () => {
           onPaymentSelect={handlePaymentSelect}
         />
         <div className="flex justify-center mt-10">
-          <Button className="w-[50%]" disabled={selectedPaymentMethod === null || placeButtonDisabled} type="default" color="default" size="small" variant="solid">
+          <Button onClick={() => navigate('/orders')} className="w-[50%]" disabled={selectedPaymentMethod === null || placeButtonDisabled} type="default" color="default" size="small" variant="solid">
             PLACE ORDER
           </Button>
         </div>
