@@ -12,15 +12,25 @@ const Navbar = () => {
 
   const items = [
     {
-      label: 'My Profile',
+      label: <Link to='/profile'>
+        My Profile
+      </Link>,
       key: '1',
     },
     {
-      label: 'Orders',
+      label: (
+        <Link to='/orders'>
+          Orders
+        </Link>
+      ),
       key: '2',
     },
     {
-      label: 'Logout',
+      label: (
+        <Link to='/logout'>
+          Logout
+        </Link>
+      ),
       key: '3',
     },
   ];
@@ -55,7 +65,10 @@ const Navbar = () => {
       <div className="flex items-center gap-3">
         <div className="group relative">
           <Dropdown menu={menuProps} placement="bottom" >
-            <Button shape='circle' icon={<PersonOutlinedIcon fontSize='medium' alt="" />} ></Button>
+            {/* menu should not show up if user not logged in add that code and menu dropdown value selection should redirect to that pages */}
+            <Link to='/login'>
+              <Button shape='circle' icon={<PersonOutlinedIcon fontSize='medium' alt="" />} ></Button>
+            </Link>
           </Dropdown>
         </div>
         <Link to='/cart' className="relative">
