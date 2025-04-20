@@ -1,17 +1,16 @@
 // import React from 'react'
 import { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
-import { Row, Col, Card, Divider, Button, InputNumber, Space, Typography, Empty } from 'antd';
+import { Row, Col, Card, Button, InputNumber, Space, Typography, Empty } from 'antd';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import Title from "../components/Title";
-import { deliveryFee } from "../utils/constant";
+import CartTotal from "../components/CartTotal";
 
 const Cart = () => {
-  const { products, currency, cartItems, updateCart, deleteCartItem, getCartAmount } = useContext(ShopContext);
+  const { products, currency, cartItems, updateCart, 
+    deleteCartItem } = useContext(ShopContext);
 
   const [cartData, setCartData] = useState([]);
-  const { Text } = Typography;
-  const subtotal = getCartAmount();
 
   const handleQuantityChange = (value, size, itemId) => {
     updateCart(itemId, size, value)
@@ -84,35 +83,6 @@ const Cart = () => {
     }
   };
 
-  const cartTotal = () => {
-    return (
-      <div style={{ maxWidth: 300, margin: '20px auto', padding: 10, border: '1px solid #f0f0f0' }}>
-        <Typography.Title level={4} className='mb-2'>
-          CART TOTALS
-          <Divider className='my-2' />
-        </Typography.Title>
-        <div className='flex justify-between mb-1'>
-          <Text>Subtotal</Text>
-          <Text>{currency}{subtotal}</Text>
-        </div>
-        <div className='flex justify-between mb-4'>
-          <Text>Shipping Fee</Text>
-          <Text>{currency}{deliveryFee}</Text>
-        </div>
-        <Divider className='my-4' />
-        <div className='flex justify-between mb-5'>
-          <Text strong>Total</Text>
-          <Text strong>
-            {subtotal != 0 ? `${currency}${subtotal + deliveryFee}` : `${currency}0`}
-          </Text>
-        </div>
-        <Button type="default" color="default" block size="middle" variant="solid">
-          PROCEED TO CHECKOUT
-        </Button>
-      </div>
-    )
-  }
-
   useEffect(() => {
     const tempData = [];
     for (const itemsId in cartItems) {
@@ -140,7 +110,7 @@ const Cart = () => {
       <div className="text-center pt-20 pb-5">
         <Title text1={'Total'} text2={'Price'}></Title>
       </div>
-      {cartTotal()}
+      <CartTotal showCheckout={true} />
     </div>
   )
 }

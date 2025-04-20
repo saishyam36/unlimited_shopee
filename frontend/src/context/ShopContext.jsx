@@ -1,11 +1,13 @@
 import { createContext, useMemo, useState } from "react";
 import { products } from "../assets/assets";
 import { currency, deliveryFee } from "../utils/constant";
+import { useNavigate } from "react-router-dom";
 
 export const ShopContext = createContext();
 
 const ShopContextProvider = (props) => {
     const [cartItems, setCartItems] = useState({});
+    const navigate = useNavigate();
 
     const addToCart = (itemId, size) => {
         let cartData = structuredClone(cartItems);
@@ -75,8 +77,10 @@ const ShopContextProvider = (props) => {
 
 
     const value = useMemo(() => ({
-        products, currency, deliveryFee, cartItems, addToCart, getCartCount, updateCart, deleteCartItem, getCartAmount
-    }), [products, currency, deliveryFee, addToCart, cartItems, getCartCount, updateCart, deleteCartItem, getCartAmount]);
+        products, currency, deliveryFee, cartItems, addToCart,
+        getCartCount, updateCart, deleteCartItem, getCartAmount, navigate
+    }), [products, currency, deliveryFee, addToCart, cartItems,
+        getCartCount, updateCart, deleteCartItem, getCartAmount, navigate]);
 
     return (
         <ShopContext.Provider value={value}>
