@@ -44,25 +44,25 @@ const Navbar = () => {
       <Link to='/'>
         <img src={assets.logo} className="w-36" alt="" />
       </Link>
-      <ul className="flex gap-5 text-sm text-gray-700">
-        <NavLink className="flex flex-col items-center gap-1" to="/">
+      <ul className="flex gap-10 text-sm text-gray-700">
+        <NavLink className="flex flex-col items-center mx-4" to="/">
           <p>HOME</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
-        <NavLink className="flex flex-col items-center gap-1" to="/collection">
+        <NavLink className="flex flex-col items-center mx-4" to="/collection">
           <p>COLLECTION</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
-        <NavLink className="flex flex-col items-center gap-1" to="/about">
+        <NavLink className="flex flex-col items-center mx-4" to="/about">
           <p>ABOUT</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
-        <NavLink className="flex flex-col items-center gap-1" to="/contact">
+        <NavLink className="flex flex-col items-center mx-4" to="/contact">
           <p>CONTACT</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
       </ul>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-8">
         <div className="group relative">
           <Dropdown menu={menuProps} placement="bottom" >
             {/* menu should not show up if user not logged in add that code and menu dropdown value selection should redirect to that pages */}
@@ -71,7 +71,7 @@ const Navbar = () => {
             </Link>
           </Dropdown>
         </div>
-        <Link to='/cart' className="relative">
+        <Link to='/cart' className="relative gap-5">
           <Badge size='small' count={getCartCount()} color='blue' showZero>
             <ShoppingBagOutlinedIcon fontSize="medium" className="w-5 min-w-5" shapeRendering='' >
             </ShoppingBagOutlinedIcon>

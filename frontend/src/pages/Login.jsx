@@ -16,8 +16,8 @@ const Login = () => {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '70vh' }}>
-      <div style={{ background: '#fff', padding: 32, borderRadius: 15, boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 500 }}>
+      <div style={{background: '#fff', padding: 20, borderRadius: 15, boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)', width: 350 }}>
         <Title level={2} style={{ textAlign: 'center', marginBottom: 24 }}>
           Login
           <Divider style={{ margin: '10px 0' }} />
