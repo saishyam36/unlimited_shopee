@@ -65,7 +65,7 @@ const SignUp = () => {
 
           <div style={{ display: 'flex', justifyContent: 'end', marginBottom: 24 }}>
             <Link to="/login">
-              <Button size='small' color='default' variant='link'>Login In Here</Button>
+              <Button size='small' color='default' className='font-mono' variant='link'>Login In Here</Button>
             </Link>
           </div>
 

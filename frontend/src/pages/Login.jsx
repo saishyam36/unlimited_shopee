@@ -57,9 +57,11 @@ const Login = () => {
 
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 24 }}>
             <Link className="login-form-forgot">
-              Forgot password
+              <Button size='small' color='default' className='font-mono' variant='link'>Forgot password</Button>
             </Link>
-            <Link to="/create-account">Create account</Link>
+            <Link to="/create-account">
+              <Button size='small' color='default' className='font-mono' variant='link'>Create account</Button>
+            </Link>
           </div>
 
           <Form.Item>
