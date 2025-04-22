@@ -1,15 +1,15 @@
 // import React from 'react'
 import { Form, Input, Button, Typography, Divider } from 'antd';
-import { MailOutlined, LockOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
-const Login = () => {
+const SignUp = () => {
 
   const { Title } = Typography;
 
   const onFinish = (values) => {
     console.log('Success:', values);
-    alert('Logged IN')
+    alert('Signed Up')
     // Here you would typically make an API call to log in the user
   };
 
@@ -21,16 +21,24 @@ const Login = () => {
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 500 }}>
       <div style={{ background: '#fff', padding: 15, borderRadius: 15, boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)', width: 350 }}>
         <Title level={2} style={{ textAlign: 'center', marginBottom: 24 }}>
-          Login
+          Sign Up
           <Divider style={{ margin: '10px 0' }} />
         </Title>
         <Form
-          name="login"
+          name="signUp"
           initialValues={{ remember: true }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
+          <Form.Item
+            name="userName"
+            rules={[
+              { required: true, message: 'Please enter your Name!' },
+            ]}
+          >
+            <Input prefix={<UserOutlined className="site-form-item-icon mr-1" />} placeholder="Name" />
+          </Form.Item>
           <Form.Item
             name="email"
             rules={[
@@ -38,7 +46,7 @@ const Login = () => {
               { type: 'email', message: 'Please enter a valid email!' },
             ]}
           >
-            <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email" />
+            <Input prefix={<MailOutlined className="site-form-item-icon mr-1" />} placeholder="Email" />
           </Form.Item>
 
           <Form.Item
@@ -49,22 +57,21 @@ const Login = () => {
             ]}
           >
             <Input
-              prefix={<LockOutlined className="site-form-item-icon" />}
+              prefix={<LockOutlined className="site-form-item-icon mr-1" />}
               type="password"
               placeholder="Password"
             />
           </Form.Item>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 24 }}>
-            <Link className="login-form-forgot">
-              Forgot password
+          <div style={{ display: 'flex', justifyContent: 'end', marginBottom: 24 }}>
+            <Link to="/login">
+              <Button size='small' color='default' variant='link'>Login In Here</Button>
             </Link>
-            <Link to="/create-account">Create account</Link>
           </div>
 
           <Form.Item>
             <Button type="default" variant='solid' color='default' htmlType="submit" block size="middle">
-              Sign In
+              Sign Up
             </Button>
           </Form.Item>
         </Form>
@@ -73,4 +80,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default SignUp

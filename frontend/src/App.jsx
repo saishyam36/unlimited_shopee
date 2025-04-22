@@ -11,6 +11,7 @@ import Orders from './pages/Orders.jsx'
 import PlaceOrder from './pages/PlaceOrder.jsx'
 import Navbar from "./components/Navbar.jsx"
 import Footer from "./components/Footer.jsx"
+import SignUp from "./pages/SignUp.jsx"
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
       <Navbar/>
       <Routes>
         <Route path="/login" element={<Login/>} />
+        <Route path="/create-account" element={<SignUp/>} />
         <Route path="/" element={<Home/>} />
         <Route path="/collection" element={<Collection/>} />
         <Route path="/product/:productID" element={<Product/>} />
