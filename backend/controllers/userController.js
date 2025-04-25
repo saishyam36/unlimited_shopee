@@ -21,4 +21,4 @@ const loginAdmin = async (req, res) => {
 }
 
 
-export { loginUser, registerUser }
+export { loginUser, registerUser, loginAdmin }
