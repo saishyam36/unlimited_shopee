@@ -12,6 +12,10 @@ const loginUser = async (req, res) => {
 // User registration route
 const registerUser = async (req, res) => {
 
+    res.json({
+        message: "User registered successfully"
+    })
+
 }
 
 
