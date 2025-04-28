@@ -4,7 +4,11 @@ import { body } from 'express-validator';
 
 const userRouter = express.Router();
 
-userRouter.post('/login', loginUser);
+userRouter.post('/login',[
+    body('email', 'Enter email').exists(),
+    body('password', 'Password cannot be blank').notEmpty(),
+    body('password', 'Password key should present').exists(),
+], loginUser);
 userRouter.post('/register',[
     body('name', 'Minimum length is 5').isLength({ min: 5 }),
     body('email', 'Enter a valid email').isEmail(),

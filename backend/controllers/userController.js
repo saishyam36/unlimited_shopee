@@ -8,15 +8,35 @@ const createToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRY })
 }
 
-
-
 // User login route
 const loginUser = async (req, res) => {
+    const errors = validationResult(req);
+    let success = false;
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ success, errors: errors.array() });
+    }
+    try {
+        const { email, password } = req.body;
 
+        const user = await userModel.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ message: "User doesn't exists", success })
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            res.status(400).json({ message: "Invalid credentials", success })
+        } else{
+            const token = createToken(user._id)
+            success = true
+            res.json({ message: "User logged in successfully", success, token })
+        }
+        
+    } catch (error) {
+        res.status(500).json({ message: error.message, success: false })
+    }
 
 }
-
-
 
 // User registration route
 const registerUser = async (req, res) => {
