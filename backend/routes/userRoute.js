@@ -9,6 +9,7 @@ userRouter.post('/login',[
     body('password', 'Password cannot be blank').notEmpty(),
     body('password', 'Password key should present').exists(),
 ], loginUser);
+
 userRouter.post('/register',[
     body('name', 'Minimum length is 5').isLength({ min: 5 }),
     body('email', 'Enter a valid email').isEmail(),
@@ -21,6 +22,11 @@ userRouter.post('/register',[
         maxLength: 16,
     })
 ], registerUser);
-userRouter.post('/admin', loginAdmin);
+
+userRouter.post('/admin',[
+    body('email', 'Enter email').exists(),
+    body('password', 'Password cannot be blank').notEmpty(),
+    body('password', 'Password key should present').exists(),
+], loginAdmin);
 
 export default userRouter;

@@ -2,6 +2,7 @@ import express from 'express';
 import { body } from 'express-validator';
 import { addProduct, listProducts, removeProduct, displayProduct } from '../controllers/productController.js';
 import upload from '../middleware/multer.js';
+import adminAuth from '../middleware/adminAuth.js';
 
 const productRouter = express.Router();
 
@@ -15,6 +16,7 @@ const generateImageFields = (count) => {
 
 productRouter.post(
     '/add',
+    adminAuth,
     upload.fields(generateImageFields(4)), // Replace 5 with the desired number of images
     [
         body('name').notEmpty().withMessage('Name is required'),

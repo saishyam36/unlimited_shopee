@@ -26,12 +26,12 @@ const loginUser = async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             res.status(400).json({ message: "Invalid credentials", success })
-        } else{
+        } else {
             const token = createToken(user._id)
             success = true
             res.json({ message: "User logged in successfully", success, token })
         }
-        
+
     } catch (error) {
         res.status(500).json({ message: error.message, success: false })
     }
@@ -76,7 +76,31 @@ const registerUser = async (req, res) => {
 
 // Admin login route
 const loginAdmin = async (req, res) => {
+    const errors = validationResult(req);
+    let success = false;
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ success, errors: errors.array() });
+    }
+    try {
+        const { email, password } = req.body;
 
+        const user = email === process.env.ADMIN_EMAIL;
+        if (!user) {
+            return res.status(400).json({ message: "Admin doesn't exists", success })
+        }
+
+        const isMatch = password === process.env.ADMIN_PASSWORD;
+        if (!isMatch) {
+            res.status(400).json({ message: "Invalid credentials", success })
+        } else {
+            const token = jwt.sign(email + password, process.env.JWT_SECRET)
+            success = true
+            res.json({ message: "Admin logged in successfully", success, token })
+        }
+
+    } catch (error) {
+        res.status(500).json({ message: error.message, success: false })
+    }
 }
 
 
