@@ -1,0 +1,11 @@
+.ant-tabs-nav-list .ant-tabs-tab a:hover {
+    color: black !important;
+  }
+  
+  .ant-tabs-nav-list .ant-tabs-tab-active a {
+    color: black !important;
+  }
+
+  .ant-tabs-tab-focus {
+    outline: white !important;
+  }
