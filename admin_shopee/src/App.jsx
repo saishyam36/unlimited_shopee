@@ -9,7 +9,7 @@ import Orders from "./pages/Orders.jsx"
 import { useEffect, useState } from "react"
 import Login from "./components/Login.jsx"
 
-export const apiUrl = 'http://localhost:4000/api/user'
+export const apiUrl = 'http://localhost:4000/api'
 
 function App() {
 

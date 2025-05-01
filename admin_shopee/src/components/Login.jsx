@@ -14,7 +14,7 @@ const Login = ({setToken}) => {
 
   const onFinish = async (values) => {
     try {
-      const response = await axios.post(apiUrl + '/admin', {
+      const response = await axios.post(apiUrl + '/user/admin', {
         email: values.email,
         password: values.password,
       });
