@@ -31,10 +31,6 @@ const AdminTabs = () => {
         },
     ];
 
-    useEffect(() => {
-
-    }, []); // Empty dependency array to run only once on mount
-
     return (
         <ConfigProvider
             theme={{
@@ -72,7 +68,6 @@ const AdminTabs = () => {
                     style={{ marginBottom: 40, minWidth: 200 }}
                     items={items}
                 />
-
             </div>
         </ConfigProvider>
     )

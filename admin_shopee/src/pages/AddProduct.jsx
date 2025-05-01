@@ -54,7 +54,7 @@ const AddProduct = ({token}) => {
     }
     setPreviewImage(file.url || file.preview);
     setPreviewOpen(true);
-  }; 
+  };  
 
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
 
@@ -67,7 +67,7 @@ const AddProduct = ({token}) => {
         // onValuesChange={onFormLayoutChange}
         style={{ maxWidth: 600 }}
       >
-        <Form.Item label={`Upload Images (Max : ${maxProductImages})`} valuePropName="fileList">
+        <Form.Item label={`Upload Images (Max : ${maxProductImages})`} valuePropName="fileList" required={true}>
           <Upload
             beforeUpload={() => false}
             onPreview={handlePreview}
@@ -101,10 +101,10 @@ const AddProduct = ({token}) => {
           )}
         </Form.Item>
         <Form.Item label="Product Name" name="productName" rules={[{ required: true, message: 'Please enter product name!' }]}>
-          <Input placeholder="Enter product name" maxLength={'30'} size='large' style={{ width: 520, resize: 'none' }} />
+          <Input placeholder="Enter product name" maxLength={'30'} size='middle' style={{ width: 520, resize: 'none' }} />
         </Form.Item>
         <Form.Item label="Product Description" name="productDescription" rules={[{ required: true, message: 'Please enter product description!' }]}>
-          <Input.TextArea placeholder="Enter product description" size='large' rows={'4'} maxLength={'300'} showCount style={{ height: 150, width: 520, resize: 'none' }} />
+          <Input.TextArea placeholder="Enter product description" size='middle' rows={'4'} maxLength={'300'} showCount style={{ height: 150, width: 520, resize: 'none' }} />
         </Form.Item>
         <div className='flex flex-row items-start justify-start gap-4' style={{ width: 400 }}>
           <Form.Item label="Product Category" name="productCategory" rules={[{ required: true, message: 'Please select product category!' }]}>
