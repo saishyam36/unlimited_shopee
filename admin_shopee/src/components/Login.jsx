@@ -1,5 +1,5 @@
 // import React from 'react'
-import { Form, Input, Button, Typography, Divider, message } from 'antd';
+import { Form, Input, Button, Typography, Divider } from 'antd';
 import { MailOutlined, LockOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'antd/es/form/Form';

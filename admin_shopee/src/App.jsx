@@ -29,9 +29,9 @@ function App() {
         <div className="px-2 sm:px-[4vw] md:px-[5vw] lg:px-[7vw]">
           <Navbar setToken={setToken} />
           <Divider variant="solid" style={{ borderWidth: 1 }} />
-          <div style={{ display: 'flex' }}>
+          <div className="flex items-start flex-row w-full h-full">
             <AdminTabs />
-            <div style={{ flex: 1, paddingLeft: 24 }}>
+            <div className="w-full h-full" style={{ flex: 1, paddingLeft: 24 }}>
               <Routes>
                 <Route path="/add" element={<AddProduct token={token} />} />
                 <Route path="/list" element={<ListProducts token={token} />} />
