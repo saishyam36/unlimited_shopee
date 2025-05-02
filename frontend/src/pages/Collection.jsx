@@ -73,7 +73,7 @@ const Collection = () => {
 
   useEffect(() => {
     setFilteredProducts(products)
-  }, [])
+  }, [products])
 
   useEffect(() => {
     setFilteredProducts(filterProducts(products, filters))

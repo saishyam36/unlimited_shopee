@@ -1,7 +1,9 @@
-import { createContext, useMemo, useState } from "react";
-import { products } from "../assets/assets";
+import { createContext, useMemo,useEffect, useState } from "react";
+// import { products } from "../assets/assets";
 import { currency, deliveryFee } from "../utils/constant";
 import { useNavigate } from "react-router-dom";
+import {message} from "antd";
+import axios from "axios";
 
 export const ShopContext = createContext();
 
@@ -10,6 +12,8 @@ const ShopContextProvider = (props) => {
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
     const [orderTime, setOrderTime] = useState(null);
     const navigate = useNavigate();
+    const backendUrl = import.meta.env.VITE_Unlimited_BACKEND_URL;
+    const [products, setProducts] = useState([]);
 
     const addToCart = (itemId, size) => {
         let cartData = structuredClone(cartItems);
@@ -76,6 +80,25 @@ const ShopContextProvider = (props) => {
         }
         return totalAmount;
     }
+
+    const getProductsData = async () => {
+        try{
+            const response = await axios.get(`${backendUrl}/product/list`);
+            console.log(response);
+            if(response.status === 200) {
+                const data = await response.data;
+                console.log('Products data:', data.products);
+                setProducts(data.products);
+            }
+        }catch (error) {
+            message.error('Error fetching products data:', error.response.data.message);
+            console.log('Error fetching products data:', error);
+        }
+    }
+
+    useEffect(() => {
+        getProductsData();
+    }, []);
 
 
     const value = useMemo(() => ({

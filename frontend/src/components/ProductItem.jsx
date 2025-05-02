@@ -12,7 +12,7 @@ const ProductItem = ({ id, image, name, price }) => {
       <Card
         hoverable
         style={{ width: 260, height: 400 }}
-        cover={<img alt="" src={image[0]} />}
+        cover={<img style={{ height: 300 }} alt="" src={image[0]} />}
       >
         <Flex vertical justify='space-between' className='detail-container'>
           <div>
