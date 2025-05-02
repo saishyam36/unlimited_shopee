@@ -4,8 +4,8 @@ import { copyRightText, phoneNumber, shopDescription, shopEmail } from '../utils
 
 const Footer = () => {
     return (
-        <div>
-            <div className='flex flex-initial gap-10 my-10 mt-35 text-sm' style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div className='pt-20'>
+            <div className='flex flex-initial gap-10 my-10 mt-45 text-sm' style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div>
                     <img src={assets.logo} className="mb-5 w-40" alt="" />
                     <p className='w-[40rem] text-gray-600'>

@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import { PlusOutlined } from '@ant-design/icons';
 import { Form, Input, Button, Select, InputNumber, Checkbox, Upload, Image } from 'antd';
-import { maxProductImages, productCategoryItems, productSizeItems, productSubCategoryItems } from '../utils/constant';
+import { backendApiUrl, maxProductImages, productCategoryItems, productSizeItems, productSubCategoryItems } from '../utils/constant';
 import useApp from 'antd/es/app/useApp';
 import axios from 'axios';
-import { apiUrl } from '../App';
 import { getBase64 } from '../utils/common';
 
 const AddProduct = ({token}) => {
@@ -35,7 +34,7 @@ const AddProduct = ({token}) => {
         formData.append(`image${index + 1}`, file.originFileObj);
       });
 
-      const response = await axios.post(apiUrl + '/product/add', formData, {headers: {token}});
+      const response = await axios.post(backendApiUrl + '/product/add', formData, {headers: {token}});
       message.success(response.data.message);
       form.resetFields();
       setFileList([]);
@@ -101,7 +100,7 @@ const AddProduct = ({token}) => {
           )}
         </Form.Item>
         <Form.Item label="Product Name" name="productName" rules={[{ required: true, message: 'Please enter product name!' }]}>
-          <Input placeholder="Enter product name" maxLength={'30'} size='middle' style={{ width: 520, resize: 'none' }} />
+          <Input placeholder="Enter product name" maxLength={'60'} size='middle' style={{ width: 520, resize: 'none' }} />
         </Form.Item>
         <Form.Item label="Product Description" name="productDescription" rules={[{ required: true, message: 'Please enter product description!' }]}>
           <Input.TextArea placeholder="Enter product description" size='middle' rows={'4'} maxLength={'300'} showCount style={{ height: 150, width: 520, resize: 'none' }} />

@@ -9,8 +9,6 @@ import Orders from "./pages/Orders.jsx"
 import { useEffect, useState } from "react"
 import Login from "./components/Login.jsx"
 
-export const apiUrl = 'http://localhost:4000/api'
-
 function App() {
 
   const [token, setToken] = useState(localStorage.getItem('token') || '');
@@ -31,7 +29,7 @@ function App() {
           <Divider variant="solid" style={{ borderWidth: 1 }} />
           <div className="flex items-start flex-row w-full h-full">
             <AdminTabs />
-            <div className="w-full h-full" style={{ flex: 1, paddingLeft: 24 }}>
+            <div className="w-full h-full">
               <Routes>
                 <Route path="/add" element={<AddProduct token={token} />} />
                 <Route path="/list" element={<ListProducts token={token} />} />

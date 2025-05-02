@@ -4,9 +4,9 @@ import { MailOutlined, LockOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'antd/es/form/Form';
 import axios from 'axios';
-import { apiUrl } from '../App';
+import { backendApiUrl } from '../utils/constant';
 
-const Login = ({setToken}) => {
+const Login = ({ setToken }) => {
 
   const [loginForm] = useForm();
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const Login = ({setToken}) => {
 
   const onFinish = async (values) => {
     try {
-      const response = await axios.post(apiUrl + '/user/admin', {
+      const response = await axios.post(backendApiUrl + '/user/admin', {
         email: values.email,
         password: values.password,
       });
