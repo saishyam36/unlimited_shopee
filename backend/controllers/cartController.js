@@ -1,5 +1,4 @@
-import userModel from "../models/userModel";
-
+import userModel from "../models/userModel.js";
 
 const addToCart = async (req, res) => {
     try {
@@ -24,7 +23,7 @@ const addToCart = async (req, res) => {
         res.status(200).json({ message: "Item added to cart" });
 
     } catch (error) {
-        console.error(error);
+        console.log(error);
         res.status(500).json({ message: error.message });
     }
 }
@@ -42,7 +41,7 @@ const updateCart = async (req, res) => {
         res.status(200).json({ message: "Cart is updated." });
 
     } catch (error) {
-        console.error(error);
+        console.log(error);
         res.status(500).json({ message: error.message });
     }
 }
@@ -56,7 +55,7 @@ const getUserCart = async (req, res) => {
         const cartData = await userData.cartData;
         res.status(200).json({ cartData });
     } catch (error) {
-        console.error(error);
+        console.log(error);
         res.status(500).json({ message: error.message });
     }
 }
