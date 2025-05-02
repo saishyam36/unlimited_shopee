@@ -55,7 +55,7 @@ const listProducts = async (req, res) => {
         res.status(200).json({ message: 'Products fetched successfully', products, success });
 
     } catch (error) {
-        res.status(500).json({ message: 'Server error', error: error.message, success });
+        res.status(500).json({ message: 'Failed to fetch products! Please try again.', error: error.message, success });
     }
 
 }
@@ -73,7 +73,7 @@ const removeProduct = async (req, res) => {
         res.status(200).json({ message: 'Products removed successfully', success });
 
     } catch (error) {
-        res.status(500).json({ message: 'Server error', error: error.message, success });
+        res.status(500).json({ message: 'Server error. Please contact admin', error: error.message, success });
     }
 
 }
