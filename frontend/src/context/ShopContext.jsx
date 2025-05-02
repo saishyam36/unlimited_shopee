@@ -49,7 +49,6 @@ const ShopContextProvider = (props) => {
         try {
             const response = await axios.post(`${backendUrl}/cart/get`,{}, { headers: { token } });
             if (response.status === 200) {
-                console.log('Response:', response);
                 setCartItems(response.data.cartData);
             }
         } catch (error) {
@@ -132,7 +131,6 @@ const ShopContextProvider = (props) => {
 
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
-        console.log('Stored token:', storedToken);
         if (!token && storedToken) {
             setToken(storedToken);
             getCartItems(storedToken);
