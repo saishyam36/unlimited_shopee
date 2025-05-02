@@ -7,7 +7,7 @@ import Title from "../components/Title";
 import CartTotal from "../components/CartTotal";
 
 const Cart = () => {
-  const { products, currency, cartItems, updateCart, 
+  const { products, currency, cartItems, updateCart,
     deleteCartItem } = useContext(ShopContext);
 
   const [cartData, setCartData] = useState([]);
@@ -84,20 +84,22 @@ const Cart = () => {
   };
 
   useEffect(() => {
-    const tempData = [];
-    for (const itemsId in cartItems) {
-      for (const itemSize in cartItems[itemsId]) {
-        if (cartItems[itemsId][itemSize] > 0) {
-          tempData.push({
-            _id: itemsId,
-            size: itemSize,
-            quantity: cartItems[itemsId][itemSize]
-          })
+    if (products.length > 0) {
+      const tempData = [];
+      for (const itemsId in cartItems) {
+        for (const itemSize in cartItems[itemsId]) {
+          if (cartItems[itemsId][itemSize] > 0) {
+            tempData.push({
+              _id: itemsId,
+              size: itemSize,
+              quantity: cartItems[itemsId][itemSize]
+            })
+          }
         }
       }
+      setCartData(tempData)
     }
-    setCartData(tempData)
-  }, [cartItems])
+  }, [cartItems, products])
 
   return (
     <div className="pb-20">

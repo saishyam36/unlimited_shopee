@@ -18,7 +18,6 @@ const addToCart = async (req, res) => {
             cartData[itemId] = {}
             cartData[itemId][size] = 1
         }
-
         await userModel.findByIdAndUpdate(userId, { cartData: cartData });
         res.status(200).json({ message: "Item added to cart" });
 
@@ -39,7 +38,6 @@ const updateCart = async (req, res) => {
         cartData[itemId][size] = quantity
         await userModel.findByIdAndUpdate(userId, { cartData: cartData });
         res.status(200).json({ message: "Cart is updated." });
-
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: error.message });
@@ -48,12 +46,13 @@ const updateCart = async (req, res) => {
 
 const getUserCart = async (req, res) => {
     try {
+        const { userId } = req.body;
         const userData = await userModel.findById(userId);
         if (!userData) {
             return res.status(404).json({ message: "User not found" });
         }
         const cartData = await userData.cartData;
-        res.status(200).json({ cartData });
+        res.status(200).json({ cartData: cartData });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: error.message });

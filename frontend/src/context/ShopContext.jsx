@@ -15,36 +15,68 @@ const ShopContextProvider = (props) => {
     const [products, setProducts] = useState([]);
     const [token, setToken] = useState(null);
 
-    const addToCart = (itemId, size) => {
-        let cartData = structuredClone(cartItems);
-
-        if (cartData[itemId]) {
-            if (cartData[itemId][size] > 0) {
-                cartData[itemId][size] += 1
-            } else {
-                cartData[itemId][size] = 1
-            }
-        } else {
-            cartData[itemId] = {}
-            cartData[itemId][size] = 1
+    const addToCart = async (itemId, size) => {
+        try {
+            const response = await axios.post(`${backendUrl}/cart/add`,
+                { itemId, size },
+                { headers: { token } }
+            );
+            message.success(response.data.message);
+        } catch (error) {
+            message.error(error.response.data.message);
+            console.log('Error adding item to cart:', error);
         }
-        setCartItems(cartData);
+        getCartItems(token);
     }
 
-    const updateCart = (itemId, size, quantity) => {
-        let cartData = structuredClone(cartItems);
-        cartData[itemId][size] = quantity
-        setCartItems(cartData);
+    const updateCart = async (itemId, size, quantity) => {
+        const cartData = structuredClone(cartItems);
+        cartData[itemId][size] = quantity;
+        try {
+            const response = await axios.post(`${backendUrl}/cart/update`,
+                { itemId, size, quantity },
+                { headers: { token } }
+            );
+            message.success(response.data.message);
+            setCartItems(cartData);
+        } catch (error) {
+            message.error(error.response.data.message);
+            console.log('Error adding item to cart:', error);
+        }
     }
 
-    const deleteCartItem = (itemId, size) => {
+    const getCartItems = async (token) => {
+        try {
+            const response = await axios.post(`${backendUrl}/cart/get`,{}, { headers: { token } });
+            if (response.status === 200) {
+                console.log('Response:', response);
+                setCartItems(response.data.cartData);
+            }
+        } catch (error) {
+            message.error(error.response.data.message);
+            console.log('Error fetching cart items:', error);
+        }
+    }
+
+
+    const deleteCartItem = async (itemId, size) => {
         let cartData = structuredClone(cartItems);
         if (cartData[itemId][size] !== undefined) {
             delete cartData[itemId][size];
             if (Object.keys(cartData[itemId]).length === 0) {
                 delete cartData[itemId];
             }
+        }
+        try {
+            const response = await axios.post(`${backendUrl}/cart/update`,
+                { itemId, size, quantity: 0 },
+                { headers: { token } }
+            );
+            message.success(response.data.message);
             setCartItems(cartData);
+        } catch (error) {
+            message.error(error.response.data.message);
+            console.log('Error adding item to cart:', error);
         }
     }
 
@@ -84,10 +116,8 @@ const ShopContextProvider = (props) => {
     const getProductsData = async () => {
         try {
             const response = await axios.get(`${backendUrl}/product/list`);
-            console.log(response);
             if (response.status === 200) {
                 const data = await response.data;
-                console.log('Products data:', data.products);
                 setProducts(data.products);
             }
         } catch (error) {
@@ -102,8 +132,10 @@ const ShopContextProvider = (props) => {
 
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
+        console.log('Stored token:', storedToken);
         if (!token && storedToken) {
             setToken(storedToken);
+            getCartItems(storedToken);
         }
     }, []);
 
