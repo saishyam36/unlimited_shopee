@@ -8,7 +8,15 @@ import { useContext } from "react";
 import { ShopContext } from "../context/ShopContext.jsx";
 
 const Navbar = () => {
-  const { getCartCount } = useContext(ShopContext);
+  const { getCartCount, navigate, token, setToken, setCartItems } = useContext(ShopContext);
+
+  const handleLogout = () => {
+    navigate('/login');
+    setToken('');
+    setCartItems({});
+    localStorage.removeItem('token');
+  };
+
 
   const items = [
     {
@@ -27,9 +35,9 @@ const Navbar = () => {
     },
     {
       label: (
-        <Link to='/logout'>
+        <p onClick={handleLogout} >
           Logout
-        </Link>
+        </p>
       ),
       key: '3',
     },
@@ -64,9 +72,9 @@ const Navbar = () => {
       </ul>
       <div className="flex items-center gap-8">
         <div className="group relative">
-          <Dropdown menu={menuProps} placement="bottom" >
+          <Dropdown disabled={!token} menu={menuProps} placement="bottom" >
             {/* menu should not show up if user not logged in add that code and menu dropdown value selection should redirect to that pages */}
-            <Link to='/login'>
+            <Link to={token ? '/' : '/login'} className="flex items-center gap-2">
               <Button shape='circle' icon={<PersonOutlinedIcon fontSize='medium' alt="" />} ></Button>
             </Link>
           </Dropdown>

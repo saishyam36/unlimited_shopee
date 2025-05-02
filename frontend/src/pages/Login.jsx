@@ -1,21 +1,41 @@
 // import React from 'react'
-import { Form, Input, Button, Typography, Divider } from 'antd';
+import { Form, Input, Button, Typography, Divider, message } from 'antd';
 import { MailOutlined, LockOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import { useContext, useEffect } from 'react';
+import { ShopContext } from '../context/ShopContext';
+import axios from 'axios';
 
 const Login = () => {
 
   const { Title } = Typography;
+  const {token, setToken, navigate, backendUrl} = useContext(ShopContext);
 
-  const onFinish = (values) => {
-    console.log('Success:', values);
-    alert('Logged IN')
-    // Here you would typically make an API call to log in the user
+  const onFinish = async (values) => {
+    const { email, password } = values;
+    try {
+      const response = await axios.post(`${backendUrl}/user/login`, {
+        email,
+        password,
+      });
+      setToken(response.data.token);
+      localStorage.setItem('token', response.data.token);
+      message.success(response.data.message);
+    } catch (error) {
+      console.log('Error logging in:', error.response.data.message);
+      message.error(error.response.data.message);
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
+
+  useEffect(() => {
+    if (token) {
+      navigate('/');
+    }
+  }, [token]);
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 500 }}>

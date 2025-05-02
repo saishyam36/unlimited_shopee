@@ -1,21 +1,48 @@
 // import React from 'react'
-import { Form, Input, Button, Typography, Divider } from 'antd';
+import { Form, Input, Button, Typography, Divider, message } from 'antd';
 import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import { useContext, useEffect } from 'react';
+import axios from 'axios';
+import { ShopContext } from '../context/ShopContext';
 
 const SignUp = () => {
 
   const { Title } = Typography;
+  const {token, setToken, backendUrl } = useContext(ShopContext);
 
-  const onFinish = (values) => {
-    console.log('Success:', values);
-    alert('Signed Up')
-    // Here you would typically make an API call to log in the user
+  const onFinish = async (values) => {
+    const { name, email, password } = values;
+    try {
+      const response = await axios.post(`${backendUrl}/user/register`, {
+        name,
+        email,
+        password,
+      });
+      console.log('response', response)
+      setToken(response.data.token);
+      localStorage.setItem('token', response.data.token);
+      message.success(response.data.message);
+    } catch (error) {
+      console.log('Error signing up:', error.response);
+      if (error?.response?.data?.message) {
+        message.error(error.response.data.message);
+      }
+      else {
+        message.error(error.response.data.errors[0].msg);
+      }
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
+
+  useEffect(() => {
+    if (token) {
+      navigate('/');
+    }
+  }, [token]);
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 500 }}>
@@ -32,9 +59,11 @@ const SignUp = () => {
           autoComplete="off"
         >
           <Form.Item
-            name="userName"
+            name="name"
             rules={[
-              { required: true, message: 'Please enter your Name!' },
+              { required: true, message: 'Please enter your Name.' }
+              , { min: 5, message: 'Please enter atleast 5 characters.' },
+              { max: 20, message: 'Please enter atmost 20 characters.' },
             ]}
           >
             <Input prefix={<UserOutlined className="site-form-item-icon mr-1" />} placeholder="Name" />
@@ -42,8 +71,8 @@ const SignUp = () => {
           <Form.Item
             name="email"
             rules={[
-              { required: true, message: 'Please enter your email!' },
-              { type: 'email', message: 'Please enter a valid email!' },
+              { required: true, message: 'Please enter your email' },
+              // { type: 'email', message: 'Please enter a valid email' },
             ]}
           >
             <Input prefix={<MailOutlined className="site-form-item-icon mr-1" />} placeholder="Email" />

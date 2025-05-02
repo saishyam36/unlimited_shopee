@@ -1,8 +1,7 @@
-import { createContext, useMemo,useEffect, useState } from "react";
-// import { products } from "../assets/assets";
+import { createContext, useMemo, useEffect, useState } from "react";
 import { currency, deliveryFee } from "../utils/constant";
 import { useNavigate } from "react-router-dom";
-import {message} from "antd";
+import { message } from "antd";
 import axios from "axios";
 
 export const ShopContext = createContext();
@@ -14,6 +13,7 @@ const ShopContextProvider = (props) => {
     const navigate = useNavigate();
     const backendUrl = import.meta.env.VITE_Unlimited_BACKEND_URL;
     const [products, setProducts] = useState([]);
+    const [token, setToken] = useState(null);
 
     const addToCart = (itemId, size) => {
         let cartData = structuredClone(cartItems);
@@ -82,15 +82,15 @@ const ShopContextProvider = (props) => {
     }
 
     const getProductsData = async () => {
-        try{
+        try {
             const response = await axios.get(`${backendUrl}/product/list`);
             console.log(response);
-            if(response.status === 200) {
+            if (response.status === 200) {
                 const data = await response.data;
                 console.log('Products data:', data.products);
                 setProducts(data.products);
             }
-        }catch (error) {
+        } catch (error) {
             message.error('Error fetching products data:', error.response.data.message);
             console.log('Error fetching products data:', error);
         }
@@ -100,12 +100,21 @@ const ShopContextProvider = (props) => {
         getProductsData();
     }, []);
 
+    useEffect(() => {
+        const storedToken = localStorage.getItem('token');
+        if (!token && storedToken) {
+            setToken(storedToken);
+        }
+    }, []);
+
 
     const value = useMemo(() => ({
         products, currency, deliveryFee, cartItems, addToCart, setSelectedPaymentMethod, selectedPaymentMethod,
-        getCartCount, updateCart, deleteCartItem, getCartAmount, navigate, orderTime, setOrderTime
+        getCartCount, updateCart, deleteCartItem, getCartAmount, navigate, orderTime, setOrderTime,
+        token, setToken, backendUrl, setCartItems
     }), [products, currency, deliveryFee, addToCart, cartItems, setSelectedPaymentMethod, selectedPaymentMethod,
-        getCartCount, updateCart, deleteCartItem, getCartAmount, navigate, orderTime, setOrderTime]);
+        getCartCount, updateCart, deleteCartItem, getCartAmount, navigate,
+        orderTime, setOrderTime, token, setToken, backendUrl, setCartItems]);
 
     return (
         <ShopContext.Provider value={value}>
