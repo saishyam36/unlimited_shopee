@@ -46,7 +46,7 @@ const Orders = () => {
                     </Col>
                     <Col>
                       <Space align="center">
-                        <Button type="dashed" color="default" size="middle" variant="filled">
+                        <Button type="default" color="default" size="middle" variant="solid">
                           Track Order
                         </Button>
                       </Space>

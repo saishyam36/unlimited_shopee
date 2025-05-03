@@ -9,54 +9,77 @@ export const maxProductImages = 4;
 export const backendApiUrl = 'http://localhost:4000/api';
 
 export const productCategoryItems = [
-    {
-      label: 'Men',
-      value: 'Men',
-    },
-    {
-      label: 'Women',
-      value: 'Women',
-    },
-    {
-      label: 'Kids',
-      value: 'Kids',
-    },
-  ];
+  {
+    label: 'Men',
+    value: 'Men',
+  },
+  {
+    label: 'Women',
+    value: 'Women',
+  },
+  {
+    label: 'Kids',
+    value: 'Kids',
+  },
+];
 
 export const productSubCategoryItems = [
-    {
-      label: 'Top Wear',
-      value: 'Topwear',
-    },
-    {
-      label: 'Bottom Wear',
-      value: 'Bottomwear',
-    },
-    {
-      label: 'Winter Wear',
-      value: 'Winterwear',
-    },
-  ];
+  {
+    label: 'Top Wear',
+    value: 'Topwear',
+  },
+  {
+    label: 'Bottom Wear',
+    value: 'Bottomwear',
+  },
+  {
+    label: 'Winter Wear',
+    value: 'Winterwear',
+  },
+];
 
 export const productSizeItems = [
-    {
-      label: 'S',
-      value: 'S',
-    },
-    {
-      label: 'M',
-      value: 'M',
-    },
-    {
-      label: 'L',
-      value: 'L',
-    },
-    {
-      label: 'XL',
-      value: 'XL',
-    },
-    {
-      label: 'XXL',
-      value: 'XXL',
-    },
-  ];
+  {
+    label: 'S',
+    value: 'S',
+  },
+  {
+    label: 'M',
+    value: 'M',
+  },
+  {
+    label: 'L',
+    value: 'L',
+  },
+  {
+    label: 'XL',
+    value: 'XL',
+  },
+  {
+    label: 'XXL',
+    value: 'XXL',
+  },
+];
+
+export const orderStatusOptions = [
+  {
+    value: 'Order Placed',
+    label: 'Order Placed',
+  },
+  {
+    value: 'Packing',
+    label: 'Packing',
+  },
+  {
+    value: 'Shipped',
+    label: 'Shipped',
+  },
+  {
+    value: 'Out for delivery',
+    label: 'Out for delivery',
+  },
+  {
+    value: 'Delivered',
+    label: 'Delivered',
+  },
+];

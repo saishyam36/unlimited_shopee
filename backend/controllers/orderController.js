@@ -77,10 +77,23 @@ const userOrders = async (req, res) => {
 
 //Admin side all orders data
 const allOrders = async (req, res) => {
-
     try {
+        const {userId} = req.body
+        const orders = await orderModel.find({}).sort({date: -1});
+
+        res.status(200).json({
+            success: true,
+            message: "Orders fetched successfully",
+            orders
+        })
 
     } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Internal server error",
+            error: error.message
+        })
+        console.log(error.message)
 
     }
 }
