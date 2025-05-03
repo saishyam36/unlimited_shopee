@@ -12,7 +12,7 @@ const placeOrder = async (req, res) => {
             amount,
             address,
             date: new Date(),
-            PaymentMethod: "Cash on Delivery",
+            paymentMethod:'CASH ON DELIVERY',
             payment: false
         })
 
@@ -55,8 +55,22 @@ const placeOrderRazorpay = async (req, res) => {
 // User order data for shop application
 const userOrders = async (req, res) => {
     try {
+        const {userId} = req.body
+        const orders = await orderModel.find({userId}).sort({date: -1});
+
+        res.status(200).json({
+            success: true,
+            message: "Orders fetched successfully",
+            orders
+        })
 
     } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Internal server error",
+            error: error.message
+        })
+        console.log(error.message)
 
     }
 }

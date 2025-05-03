@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
-import { Row, Col, Card, Button, Space, Typography } from 'antd';
+import { Row, Col, Card, Button, Space, Typography, message } from 'antd';
 import Title from "../components/Title";
+import axios from "axios";
+import { formatDate } from "../utils/common";
 
 const Orders = () => {
-  const { products, currency, cartItems, selectedPaymentMethod, orderTime } = useContext(ShopContext);
+  const { products, backendUrl, token, currency } = useContext(ShopContext);
   const [cartData, setCartData] = useState([]);
   const { Text } = Typography;
-
-  console.log(cartItems)
 
   const cartGrid = () => {
     if (cartData.length >= 1) {
@@ -34,9 +34,9 @@ const Orders = () => {
                           <p className="text-sm font-mono mr-5">Price: {currency}{item.price}</p>
                           <p className='text-sm font-mono'>Size: {cartItem.size}</p>
                         </div>
-                        <p className="font-mono">Date: {orderTime}</p>
+                        <p className="font-mono">Date: {cartItem.date}</p>
                         <p className="font-mono">Quantity: {cartItem.quantity}</p>
-                        <p className="font-mono">Payment: {selectedPaymentMethod}</p>
+                        <p className="font-mono">Payment: {cartItem.paymentMethod}</p>
                       </div>
                     </Col>
                     <Col>
@@ -61,21 +61,38 @@ const Orders = () => {
     }
   };
 
-  useEffect(() => {
-    const tempData = [];
-    for (const itemsId in cartItems) {
-      for (const itemSize in cartItems[itemsId]) {
-        if (cartItems[itemsId][itemSize] > 0) {
-          tempData.push({
-            _id: itemsId,
-            size: itemSize,
-            quantity: cartItems[itemsId][itemSize]
-          })
-        }
-      }
+  const getOrderData = async () => {
+    if (!token) {
+      message.error('Please login to view your orders');
+      return;
     }
-    setCartData(tempData)
-  }, [cartItems])
+    try {
+      const response = await axios.post(`${backendUrl}/order/userorders`, {}, { headers: { token } });
+      const orderData = response.data.orders;
+      const allOrderData = [];
+      orderData.map((order) => {
+        order.items.map((item) => {
+          item['payment'] = order.payment;
+          item['status'] = order.status;
+          item['paymentMethod'] = order.paymentMethod;
+          item['date'] = formatDate(order.date);
+          allOrderData.push(item);
+        })
+      });
+      setCartData(allOrderData);
+    } catch (error) {
+      if (error.response?.data) {
+        message.error(error.response.data.message);
+      } else {
+        message.error('Something went wrong!');
+      }
+      console.log('Error fetching orders:', error);
+    }
+  }
+
+  useEffect(() => {
+    getOrderData();
+  }, [])
 
   return (
     <div className="pb-20">

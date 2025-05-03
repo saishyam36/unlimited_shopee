@@ -3,34 +3,26 @@ import { Form, Input, Typography, Row, Col, Divider } from 'antd';
 
 const { Title } = Typography;
 
-const DeliveryInformationForm = ({ setPlaceButtonDisabled }) => {
+const DeliveryInformationForm = ({setDeliveryInfo, setInfoFilled }) => {
   const [form] = Form.useForm();
   const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'street', 'city', 'state', 'zipcode', 'country'];
 
-  const onValuesChange = (changedValues, allValues) => {
+  const onValuesChange = (_,allValues) => {
     const allFilled = requiredFields.every(field => allValues[field]);
-    if (setPlaceButtonDisabled) {
-      setPlaceButtonDisabled(!allFilled);
+    setInfoFilled && setInfoFilled(allFilled);
+    if(allFilled){
+        setDeliveryInfo(allValues);
     }
-    // You can access the current form values here if needed
-    // console.log('Current Form Values:', allValues);
-  };
-
-
-  const onFinish = (values) => {
-    console.log('Delivery Information Submitted:', values);
-    // Implement your delivery information submission logic directly within this component
-    // or use a state management solution (like Redux, Zustand, Context API) to pass the data.
   };
 
 
   useEffect(() => {
     const initialValues = form.getFieldsValue(requiredFields);
     const initiallyFilled = requiredFields.every(field => initialValues[field]);
-    if (setPlaceButtonDisabled) {
-      setPlaceButtonDisabled(!initiallyFilled);
+    if (setInfoFilled) {
+      setInfoFilled(initiallyFilled);
     }
-  }, [form, setPlaceButtonDisabled, requiredFields]);
+  }, [form, setInfoFilled]);
 
   return (
     <div style={{ maxWidth: 800, margin: '20px auto', padding: 10, border: '1px solid #f0f0f0' }} className='w-full flex flex-col justify-start'>
@@ -41,7 +33,6 @@ const DeliveryInformationForm = ({ setPlaceButtonDisabled }) => {
       <Form
         form={form}
         layout="vertical"
-        onFinish={onFinish}
         autoComplete="on"
         onValuesChange={onValuesChange}
       >

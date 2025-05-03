@@ -4,22 +4,20 @@ import CartTotal from "../components/CartTotal"
 import { assets } from "../assets/assets";
 import PaymentMethodOptions from "../components/PaymentMethodOptions";
 import DeliveryInformationForm from "../components/DeliveryInformationForm";
-import { Button } from "antd";
+import { Button, message } from "antd";
 import { ShopContext } from "../context/ShopContext";
+import axios from "axios";
 
 const PlaceOrder = () => {
-  const [placeButtonDisabled, setPlaceButtonDisabled] = useState(false);
-  const { navigate, selectedPaymentMethod, setSelectedPaymentMethod, setOrderTime } = useContext(ShopContext);
-
-  const handlePaymentSelect = (paymentValue) => {
-    setSelectedPaymentMethod(paymentValue);
-    console.log('Selected Payment Method:', paymentValue);
-  };
+  const [infoFilled, setInfoFilled] = useState(false);
+  const [paymentSelected, setPaymentSelected] = useState(false);
+  const { navigate,setCartItems, token, selectedPaymentMethod, cartItems, products, backendUrl, deliveryFee, getCartAmount, } = useContext(ShopContext);
+  const [deliveryInfo, setDeliveryInfo] = useState({});
 
   const paymentMethods = [
     {
       value: 'stripe',
-      name: 'stripe',
+      name: 'Stripe',
       image: assets.stripe_logo,
     },
     {
@@ -34,30 +32,73 @@ const PlaceOrder = () => {
     },
   ];
 
+  const handlePlaceOrder = async () => {
+    try {
+      const orderItems = [];
+
+      for (const itemsId in cartItems) {
+        for (const itemSize in cartItems[itemsId]) {
+          if (cartItems[itemsId][itemSize] > 0) {
+            const itemInfo = structuredClone(products.find(product => product._id === itemsId));
+            if (itemInfo) {
+              itemInfo.size = itemSize;
+              itemInfo.quantity = cartItems[itemsId][itemSize];
+              orderItems.push(itemInfo);
+            }
+          }
+        }
+      }
+
+      console.log('orderItems', orderItems);
+
+      let orderData = {
+        items: orderItems,
+        amount: getCartAmount() + deliveryFee,
+        address: deliveryInfo,
+      }
+
+      let response;
+
+      switch (selectedPaymentMethod) {
+        case 'CASH ON DELIVERY':
+          response = await axios.post(`${backendUrl}/order/place`, orderData, { headers: { token } });
+          break;
+        case 'Stripe':
+          response = await axios.post(`${backendUrl}/order/placestripe`, orderData, { headers: { token } });
+          break;
+        case 'Razorpay':
+          response = await axios.post(`${backendUrl}/order/placerazorpay`, orderData, { headers: { token } });
+          break;
+
+        default:
+          break;
+      }
+
+      if(response.status === 200) {
+        setCartItems({});
+        navigate('/orders')
+        message.success(response.data.message);
+        console.log('Order placed successfully:', response.data);
+      }
+    } catch (err) {
+      console.log(err.message)
+    }
+  }
+  console.log('deliveryInfo', deliveryInfo);
+
   return (
     <div className="flex flex-row justify-between mb-40">
       <div className="flex flex-row flex-1">
-        <DeliveryInformationForm setPlaceButtonDisabled={setPlaceButtonDisabled} />
+        <DeliveryInformationForm setDeliveryInfo={setDeliveryInfo} setInfoFilled={setInfoFilled} />
       </div>
       <div className="flex flex-col justify-start flex-1">
         <CartTotal showCheckout={false} />
         <PaymentMethodOptions
           paymentOptions={paymentMethods}
-          onPaymentSelect={handlePaymentSelect}
+          setPaymentSelected={setPaymentSelected}
         />
         <div className="flex justify-center mt-10">
-          <Button onClick={() => {
-            navigate('/orders')
-            const today = new Date();
-            const formattedDate = today.toLocaleDateString('en-US', {
-              weekday: 'short',
-              month: 'short',
-              day: 'numeric', 
-              year: 'numeric'  
-            });
-            setOrderTime(formattedDate)
-          }
-          } className="w-[50%]" disabled={selectedPaymentMethod === null || placeButtonDisabled} type="default" color="default" size="small" variant="solid">
+          <Button onClick={handlePlaceOrder} className="w-[50%]" disabled={!paymentSelected || !infoFilled} type="default" color="default" size="small" variant="solid">
             PLACE ORDER
           </Button>
         </div>

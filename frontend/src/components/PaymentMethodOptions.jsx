@@ -1,17 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Typography, Radio, Divider } from 'antd';
+import { ShopContext } from '../context/ShopContext';
 
 const { Text, Title } = Typography;
 
-const PaymentMethodOptions = ({ paymentOptions, onPaymentSelect }) => {
+const PaymentMethodOptions = ({ paymentOptions, setPaymentSelected }) => {
   const [selectedPayment, setSelectedPayment] = useState(null);
+  const { selectedPaymentMethod, setSelectedPaymentMethod } = useContext(ShopContext);
 
   const handlePaymentChange = (e) => {
     setSelectedPayment(e.target.value);
-    if (onPaymentSelect) {
-      onPaymentSelect(paymentOptions.find((option) => option.value === e.target.value).name);
-    }
+    setSelectedPaymentMethod(paymentOptions.find((option) => option.value === e.target.value).name);
+    setPaymentSelected(true);
   };
+
+  useEffect(() => {
+    if (selectedPaymentMethod) {
+      setSelectedPayment(paymentOptions.find((option) => option.name === selectedPaymentMethod).value);
+      setPaymentSelected(true);
+    }
+  }, []);
 
   return (
     <div style={{ maxWidth: 300, margin: '20px auto', padding: 10, border: '1px solid #f0f0f0' }} className='w-full flex flex-col justify-between'>
