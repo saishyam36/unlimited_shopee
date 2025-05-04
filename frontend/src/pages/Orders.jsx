@@ -41,7 +41,7 @@ const Orders = () => {
                     </Col>
                     <Col>
                       <Space align="center">
-                        <Text className="text-lg" type="success">Order Placed</Text>
+                        <Text className="text-lg" type="success">{cartItem.status}</Text>
                       </Space>
                     </Col>
                     <Col>

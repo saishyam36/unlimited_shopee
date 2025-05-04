@@ -12,6 +12,7 @@ import PlaceOrder from './pages/PlaceOrder.jsx'
 import Navbar from "./components/Navbar.jsx"
 import Footer from "./components/Footer.jsx"
 import SignUp from "./pages/SignUp.jsx"
+import Verify from "./pages/Verify.jsx"
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="/orders" element={<Orders/>} />
         <Route path="/contact" element={<Contact/>} />
         <Route path="/about" element={<About/>} />
+        <Route path="/verify" element={<Verify/>} />
       </Routes>
       <Footer/>
     </div>

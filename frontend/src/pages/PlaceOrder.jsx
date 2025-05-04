@@ -11,7 +11,7 @@ import axios from "axios";
 const PlaceOrder = () => {
   const [infoFilled, setInfoFilled] = useState(false);
   const [paymentSelected, setPaymentSelected] = useState(false);
-  const { navigate,setCartItems, token, selectedPaymentMethod, cartItems, products, backendUrl, deliveryFee, getCartAmount, } = useContext(ShopContext);
+  const { navigate, setCartItems, token, selectedPaymentMethod, cartItems, products, backendUrl, deliveryFee, getCartAmount, } = useContext(ShopContext);
   const [deliveryInfo, setDeliveryInfo] = useState({});
 
   const paymentMethods = [
@@ -20,11 +20,11 @@ const PlaceOrder = () => {
       name: 'Stripe',
       image: assets.stripe_logo,
     },
-    {
-      value: 'razorpay',
-      name: 'Razorpay',
-      image: assets.razorpay_logo,
-    },
+    // {
+    //   value: 'razorpay',
+    //   name: 'Razorpay',
+    //   image: assets.razorpay_logo,
+    // },
     {
       value: 'cash_on_delivery',
       name: 'CASH ON DELIVERY',
@@ -57,28 +57,28 @@ const PlaceOrder = () => {
         address: deliveryInfo,
       }
 
-      let response;
-
-      switch (selectedPaymentMethod) {
-        case 'CASH ON DELIVERY':
-          response = await axios.post(`${backendUrl}/order/place`, orderData, { headers: { token } });
-          break;
-        case 'Stripe':
-          response = await axios.post(`${backendUrl}/order/placestripe`, orderData, { headers: { token } });
-          break;
-        case 'Razorpay':
-          response = await axios.post(`${backendUrl}/order/placerazorpay`, orderData, { headers: { token } });
-          break;
-
-        default:
-          break;
-      }
-
-      if(response.status === 200) {
-        setCartItems({});
-        navigate('/orders')
-        message.success(response.data.message);
-        console.log('Order placed successfully:', response.data);
+      if (selectedPaymentMethod === 'CASH ON DELIVERY') {
+        const response = await axios.post(`${backendUrl}/order/place`, orderData, { headers: { token } });
+        if (response.status === 200) {
+          setCartItems({});
+          navigate('/orders');
+          message.success(response.data.message);
+          console.log('Order placed successfully:', response.data);
+        } else {
+          message.error(response.data.message);
+          console.log('Error placing order:', response.data);
+        }
+      } else if (selectedPaymentMethod === 'Stripe') {
+        const response = await axios.post(`${backendUrl}/order/placestripe`, orderData, { headers: { token } });
+        console.log('response', response.data);
+        if (response.status === 200) {
+          const {session_url} = response.data;
+          window.location.replace(session_url);
+          console.log('stripe', response.data);
+        } else {
+          message.error(response.data.message);
+          console.log('Error placing order:', response.data);
+        }
       }
     } catch (err) {
       console.log(err.message)
