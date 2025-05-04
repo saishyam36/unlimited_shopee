@@ -124,7 +124,7 @@ const verifyStripe = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: "'Error verifying payment. Please try again later.'",
+            message: "Error verifying payment. Please try again later.",
             error: error.message
         })
         console.log(error.message)
@@ -205,4 +205,4 @@ const updateStatus = async (req, res) => {
     }
 }
 
-export { placeOrder,verifyStripe, placeOrderStripe, placeOrderRazorpay, userOrders, allOrders, updateStatus }
+export { placeOrder,verifyStripe, placeOrderStripe, userOrders, allOrders, updateStatus }
