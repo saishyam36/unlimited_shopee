@@ -23,6 +23,24 @@ const Orders = ({ token }) => {
     }
   }
 
+  const handleStatusChange = async (orderId, value) => {
+    try {
+      const response = await axios.post(`${backendApiUrl}/order/status`, { orderId, status: value }, { headers: { token } });
+      const updatedOrders = orders.map(order => {
+        if (order._id === orderId) {
+          return { ...order, status: value };
+        }
+        return order;
+      });
+      setOrders(updatedOrders);
+      message.success(response.data.message);
+    } catch (error) {
+      console.log('Error updating order status:', error);
+      message.error(error.response.data.message);
+    }
+
+  }
+
   useEffect(() => {
     fetchAllOrders()
   }, [])
@@ -30,9 +48,11 @@ const Orders = ({ token }) => {
   return (
     <div>
       {orders.map((order, index) => (
-        <div key={index} className="grid grid-cols-1 sm:grid-cols-[0.5fr_2fr_1fr] lg:grid-cols-[0.5fr_2fr_1fr_1fr_1fr] gap-3 items-start border-2 border-gray-200 p-5 md:p-8 my-3 md:my-4 text-xs sm:text-sm text-gray-700">
-          <Image src={assets.parcel_icon} preview={false} alt="" className="w-15" />
-          <div>
+        <div key={index} className="grid grid-cols-1 md:grid-cols-[0.5fr_2fr_1fr] lg:grid-cols-[0.5fr_2fr_1fr_1fr_1fr] gap-3 items-start border-2 border-gray-200 p-5 md:p-8 my-3 md:my-4 text-xs sm:text-sm text-gray-700">
+          <div className="flex items-center justify-center gap-2">
+            <Image src={assets.parcel_icon} preview={false} alt="" className="w-15" />
+          </div>
+          <div className="flex flex-col">
             <div>
               {order.items.map((item, index) => {
                 if (order.items.length > 1 && index === order.items.length - 1) {
@@ -58,7 +78,7 @@ const Orders = ({ token }) => {
           <p className="text-sm sm:text-[15px]">{currency + order.amount}</p>
           <Select
             value={order.status}
-            // onChange={onChange} do onchange call api to update order status that should in the value to show in the value top
+            onChange={(value) => handleStatusChange(order._id, value)}
             options={orderStatusOptions}
             style={{ width: '100%' }}
           />
