@@ -8,7 +8,7 @@ const adminAuth = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        if (decoded !== process.env.Admin_EMAIL+process.env.Admin_PASSWORD) {
+        if (decoded !== process.env.ADMIN_EMAIL+process.env.ADMIN_PASSWORD) {
             return res.status(403).json({ message: 'Forbidden: Admins only' })
         }
         req.user = decoded
