@@ -9,7 +9,7 @@ import { ShopContext } from '../context/ShopContext';
 const SignUp = () => {
 
   const { Title } = Typography;
-  const {token, setToken, backendUrl } = useContext(ShopContext);
+  const { token, setToken, navigate, backendUrl } = useContext(ShopContext);
 
   const onFinish = async (values) => {
     const { name, email, password } = values;
@@ -19,7 +19,6 @@ const SignUp = () => {
         email,
         password,
       });
-      console.log('response', response)
       setToken(response.data.token);
       localStorage.setItem('token', response.data.token);
       message.success(response.data.message);
