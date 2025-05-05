@@ -9,7 +9,7 @@ This project is a fully functional e-commerce platform built with a modern tech 
 * [Technologies Used](#technologies-used)
 * [Project Structure](#project-structure)
 * [Deployment](#deployment)
-* [URLs](#urls)
+* [Application URLs](#urls)
 * [Setup Instructions](#setup-instructions)
     * [Backend Setup](#backend-setup)
     * [Frontend Setup](#frontend-setup)
@@ -143,11 +143,11 @@ Unlimited Shopee provides a seamless online shopping experience for users. Custo
 This project's frontend (both customer website and admin dashboard) and backend are deployed on [Vercel](https://vercel.com/). Vercel provides automatic deployments from Git repositories, making the deployment process seamless.
 
 ## URLs
-
+```
 **Customer Website:** https://unlimited-shopee-frontend.vercel.app/
 **Admin Dashboard:** https://unlimited-shopee-admin.vercel.app/
 **Backend API:** https://unlimited-shopee.vercel.app/ (While not directly accessed by users, this is the base URL for API calls from the frontends)
-
+```
 ## Setup Instructions
 
 To run this project locally for development, follow these steps:
@@ -173,7 +173,8 @@ To run this project locally for development, follow these steps:
 
     (Assuming you have a `dev` script in your `package.json` that uses `nodemon` or a similar tool).
 
-### Frontend Setup (Customer Website)
+### Frontend Setup 
+   (Customer Website)
 
 1.  Navigate to the `frontend` directory:
 
@@ -194,7 +195,7 @@ To run this project locally for development, follow these steps:
 
     This will usually open the application in your browser at `http://localhost:3000`.
 
-### Admin Setup (Admin Dashboard)
+### Admin Setup
 
 1.  Navigate to the `admin` directory:
 
