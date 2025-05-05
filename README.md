@@ -78,7 +78,7 @@ Unlimited Shopee provides a seamless online shopping experience for users. Custo
 * [Stripe](https://stripe.com/) - For secure payment processing.
 
 ## Project Structure
-
+```
 ├── backend/ 
 │   ├── config/        # Configuration files (e.g., database config)
 │   ├── controllers/   # Handles application logic for routes
@@ -137,7 +137,7 @@ Unlimited Shopee provides a seamless online shopping experience for users. Custo
 │   ├── tailwind.config.js# Configuration file for Tailwind CSS
 │   ├── vercel.json      # Configuration file for Vercel deployment
 │   └── vite.config.js   # Configuration file for Vite build tool
-
+```
 ## Deployment
 
 This project's frontend (both customer website and admin dashboard) and backend are deployed on [Vercel](https://vercel.com/). Vercel provides automatic deployments from Git repositories, making the deployment process seamless.
@@ -220,7 +220,7 @@ To run this project locally for development, follow these steps:
 You will need to configure the following environment variables. Create a `.env` file in your `backend` directory and `.env.local` files in your `frontend` and `admin` directories.
 
 **Backend (.env):**
-
+```
 MONGODB_URI=[Your MongoDB Connection String]
 JWT_SECRET=[Your Secret Key for JWT]
 CLOUDINARY_NAME=[Your Cloudinary Cloud Name]
@@ -230,6 +230,7 @@ STRIPE_SECRET_KEY=[Your Stripe Secret Key]
 JWT_EXPIRY=[Add Expiry date]
 ADMIN_EMAIL=[]
 ADMIN_PASSWORD=[]
+```
 
 **Frontend (.env.local) & Admin (.env.local):**
 
