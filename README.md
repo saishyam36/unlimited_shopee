@@ -143,11 +143,12 @@ Unlimited Shopee provides a seamless online shopping experience for users. Custo
 This project's frontend (both customer website and admin dashboard) and backend are deployed on [Vercel](https://vercel.com/). Vercel provides automatic deployments from Git repositories, making the deployment process seamless.
 
 ## URLs
-```
-**Customer Website:** https://unlimited-shopee-frontend.vercel.app/
-**Admin Dashboard:** https://unlimited-shopee-admin.vercel.app/
-**Backend API:** https://unlimited-shopee.vercel.app/ (While not directly accessed by users, this is the base URL for API calls from the frontends)
-```
+
+1. Customer Website: https://unlimited-shopee-frontend.vercel.app/
+2. Admin Dashboard: https://unlimited-shopee-admin.vercel.app/
+3. Backend API: https://unlimited-shopee.vercel.app/ 
+(While not directly accessed by users, this is the base URL for API calls from the frontends)
+
 ## Setup Instructions
 
 To run this project locally for development, follow these steps:
