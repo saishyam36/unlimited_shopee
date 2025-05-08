@@ -1,6 +1,6 @@
 # Unlimited Shopee - E-commerce Platform
 
-This project is a fully functional e-commerce platform built with a modern tech stack. It includes a customer-facing website for browsing and purchasing products, an admin dashboard for managing inventory and orders, a robust backend API, and secure payment integration.
+This project is a fully functional e-commerce platform built with a modern tech stack. It includes a customer-facing website for browsing and purchasing products, an admin dashboard for managing inventory and orders, a robust backend API, secure payment integration and seamless interaction between server and client for live notifications.
 
 ## Table of Contents
 
@@ -21,7 +21,8 @@ This project is a fully functional e-commerce platform built with a modern tech 
 
 ## Overview
 
-Unlimited Shopee provides a seamless online shopping experience for users. Customers can browse products, add them to their cart, and securely complete purchases. The administrative interface allows store owners to efficiently manage products, track orders, and oversee the platform's operations.
+Unlimited Shopee offers a streamlined e-commerce experience, empowering customers to effortlessly browse products, manage their cart, and complete secure purchases. Simultaneously, a dedicated administrative interface provides store owners with robust tools for efficient product catalog management, comprehensive order tracking, and insightful oversight of the platform's operations, ensuring a seamless experience for both buyers and sellers.
+Stay tuned for live notifications that will keep customers instantly informed about updates to their order status. This ensures a seamless and real-time experience for both buyers and sellers.
 
 ## Key Features
 
@@ -35,6 +36,7 @@ Unlimited Shopee provides a seamless online shopping experience for users. Custo
 * Related products of the category and sub-category
 * Order history for registered users.
 * Responsive design for various screen sizes.
+* Live notifications and status updates of the order.
 
 **Admin Dashboard:**
 
@@ -49,6 +51,7 @@ Unlimited Shopee provides a seamless online shopping experience for users. Custo
 * Data persistence using MongoDB.
 * Image handling via Cloudinary.
 * Integration with Stripe for payment processing.
+* The use of Server-Sent Events (SSE) ensures a persistent, one-way connection from the backend to the frontend, enabling the server to efficiently push real-time information and updates to the client.
 
 ## Technologies Used
 
@@ -70,6 +73,7 @@ Unlimited Shopee provides a seamless online shopping experience for users. Custo
 * [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) - For creating and verifying JWTs for authentication.
 * [bcrypt](https://www.npmjs.com/package/bcrypt) - For password hashing.
 * [cors](https://www.npmjs.com/package/cors) - For enabling Cross-Origin Resource Sharing.
+* [Server-Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events) - A lightweight, standards-based approach for the backend to push real-time updates to the frontend over a persistent HTTP connection.
 
 **Other Services:**
 
