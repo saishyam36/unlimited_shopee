@@ -9,11 +9,40 @@ export const ShopContext = createContext();
 const ShopContextProvider = (props) => {
     const [cartItems, setCartItems] = useState({});
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
-    const [orderTime, setOrderTime] = useState(null);
     const navigate = useNavigate();
     const backendUrl = import.meta.env.VITE_Unlimited_BACKEND_URL;
     const [products, setProducts] = useState([]);
     const [token, setToken] = useState(null);
+
+    const connectToOrderStatusStream = (token) => {
+        if (!token) {
+            console.warn('Authentication token is missing. SSE connection not established.');
+            return; // Do not proceed if there's no token
+        }
+
+        const eventSource = new EventSource(`${backendUrl}/order/status-stream?token=${token}`);
+
+        eventSource.onmessage = function (event) {
+            const data = JSON.parse(event.data);
+            console.log('Message from server:', data);
+            message.success(data.message)
+        };
+
+        eventSource.onerror = function (event) {
+            console.error('Error occurred:', event);
+        };
+
+        eventSource.onopen = function (event) {
+            console.log('Connection opened:', event);
+        }
+
+        // Handle connection close event.
+        eventSource.onclose = function (event) {
+            console.log('Connection closed:', event);
+        };
+
+        return eventSource;
+    }
 
     const addToCart = async (itemId, size) => {
         try {
@@ -47,7 +76,7 @@ const ShopContextProvider = (props) => {
 
     const getCartItems = async (token) => {
         try {
-            const response = await axios.post(`${backendUrl}/cart/get`,{}, { headers: { token } });
+            const response = await axios.post(`${backendUrl}/cart/get`, {}, { headers: { token } });
             if (response.status === 200) {
                 setCartItems(response.data.cartData);
             }
@@ -134,17 +163,18 @@ const ShopContextProvider = (props) => {
         if (!token && storedToken) {
             setToken(storedToken);
             getCartItems(storedToken);
+            connectToOrderStatusStream(storedToken);
         }
     }, []);
 
 
     const value = useMemo(() => ({
         products, currency, deliveryFee, cartItems, addToCart, setSelectedPaymentMethod, selectedPaymentMethod,
-        getCartCount, updateCart, deleteCartItem, getCartAmount, navigate, orderTime, setOrderTime,
+        getCartCount, updateCart, deleteCartItem, getCartAmount, navigate,
         token, setToken, backendUrl, setCartItems
     }), [products, currency, deliveryFee, addToCart, cartItems, setSelectedPaymentMethod, selectedPaymentMethod,
-        getCartCount, updateCart, deleteCartItem, getCartAmount, navigate,
-        orderTime, setOrderTime, token, setToken, backendUrl, setCartItems]);
+        getCartCount, updateCart, deleteCartItem, getCartAmount, navigate
+        , token, setToken, backendUrl, setCartItems]);
 
     return (
         <ShopContext.Provider value={value}>
