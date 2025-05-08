@@ -227,11 +227,12 @@ const updateOrderStatusInUser = (req, res) => {
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');
+    res.setHeader('Access-Control-Allow-Origin', '*');
 
     sseClients.add(res);
 
     // Send a welcome message to the client upon connection(for testing purpose)
-    // res.write(`data: ${JSON.stringify({ message: 'Welcome to the Order Event Stream!' })}\n\n`);
+    res.write(`data: ${JSON.stringify({ message: 'Welcome to the Order Event Stream!', orderId: null })}\n\n`);
 
     const orderStatusListener = (orderUserId, orderId, newStatus) => {
         if (userId === orderUserId) {

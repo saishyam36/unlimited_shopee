@@ -19,28 +19,29 @@ const ShopContextProvider = (props) => {
     const connectToOrderStatusStream = (token) => {
         if (!token) {
             console.log('Authentication token is missing. SSE connection not established.');
-            return; // Do not proceed if there's no token
+            return;
         }
 
         const eventSource = new EventSource(`${backendUrl}/order/status-stream?token=${token}`);
 
         eventSource.onmessage = function (event) {
             const data = JSON.parse(event.data);
-            setOrderUpdated(true);
-            message.success(data.message)
+            if (data.orderId) {
+                setOrderUpdated(true);
+                message.success(data.message)
+            }
         };
 
         eventSource.onerror = function (event) {
-            console.error('Error occurred:', event);
+            console.error('Error occurred');
         };
 
         eventSource.onopen = function (event) {
-            console.log('Connection opened:', event);
+            console.log('Connection opened');
         }
 
-        // Handle connection close event.
         eventSource.onclose = function (event) {
-            console.log('Connection closed:', event);
+            console.log('Connection closed');
         };
         setEvent(eventSource)
     }
