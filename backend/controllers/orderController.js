@@ -8,6 +8,13 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 const currency = 'INR'
 const deliveryCharge = 10
 const orderStatusEmitter = new EventEmitter()
+const statusMessages = {
+    'Order Placed': 'Your order has been successfully placed!',
+    'Packing': 'Your order is being carefully packed and prepared for shipment.',
+    'Shipped': 'Your order has been shipped and is on its way!',
+    'Out for delivery': 'Your order is out for delivery and should arrive soon.',
+    'Delivered': 'Your order has been successfully delivered. Enjoy!',
+};
 
 const sseClients = new Set();
 
@@ -231,7 +238,7 @@ const updateOrderStatusInUser = (req, res) => {
             const eventData = {
                 orderId: orderId,
                 status: newStatus,
-                message: `Order status updated to ${newStatus}`,
+                message: statusMessages[newStatus],
             };
             res.write(`data: ${JSON.stringify(eventData)}\n\n`);
         }

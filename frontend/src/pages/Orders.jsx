@@ -101,12 +101,19 @@ const Orders = () => {
     const storedToken = localStorage.getItem('token');
     if (storedToken) {
       getOrderData(storedToken);
-      console.log('rendered')
     } else {
       message.error('Please login to view your orders');
       setLoading(false);
     }
   }, [])
+
+  useEffect(()=>{
+    const storedToken = localStorage.getItem('token');
+    if (orderUpdated) {
+      getOrderData(storedToken);
+      setOrderUpdated(false)
+    }
+  },[orderUpdated])
 
   return (
     <div className="pb-20">

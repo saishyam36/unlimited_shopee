@@ -14,10 +14,11 @@ const ShopContextProvider = (props) => {
     const [products, setProducts] = useState([]);
     const [token, setToken] = useState(null);
     const [orderUpdated, setOrderUpdated] = useState(false);
+    const [event, setEvent] = useState('');
 
     const connectToOrderStatusStream = (token) => {
         if (!token) {
-            console.warn('Authentication token is missing. SSE connection not established.');
+            console.log('Authentication token is missing. SSE connection not established.');
             return; // Do not proceed if there's no token
         }
 
@@ -25,7 +26,6 @@ const ShopContextProvider = (props) => {
 
         eventSource.onmessage = function (event) {
             const data = JSON.parse(event.data);
-            console.log('Message from server:', data);
             setOrderUpdated(true);
             message.success(data.message)
         };
@@ -42,8 +42,7 @@ const ShopContextProvider = (props) => {
         eventSource.onclose = function (event) {
             console.log('Connection closed:', event);
         };
-
-        return eventSource;
+        setEvent(eventSource)
     }
 
     const addToCart = async (itemId, size) => {
@@ -161,24 +160,23 @@ const ShopContextProvider = (props) => {
         const storedToken = localStorage.getItem('token');
         if (!token && storedToken) {
             setToken(storedToken);
-            connectToOrderStatusStream(storedToken);
         }
     }, []);
-    
+
     useEffect(() => {
         if (token) {
             getCartItems(token);
+            connectToOrderStatusStream(token);
         }
     }, [token]);
-
 
     const value = useMemo(() => ({
         products, currency, deliveryFee, cartItems, addToCart, setSelectedPaymentMethod, selectedPaymentMethod,
         getCartCount, updateCart, deleteCartItem, getCartAmount, navigate,
-        token, setToken, backendUrl, setCartItems,orderUpdated, setOrderUpdated
+        token, setToken, backendUrl, setCartItems, orderUpdated, setOrderUpdated, event
     }), [products, currency, deliveryFee, addToCart, cartItems, setSelectedPaymentMethod, selectedPaymentMethod,
         getCartCount, updateCart, deleteCartItem, getCartAmount, navigate
-        , token, setToken, backendUrl, setCartItems, orderUpdated, setOrderUpdated]);
+        , token, setToken, backendUrl, setCartItems, orderUpdated, setOrderUpdated, event]);
 
     return (
         <ShopContext.Provider value={value}>

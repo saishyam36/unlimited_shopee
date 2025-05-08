@@ -8,12 +8,13 @@ import { useContext } from "react";
 import { ShopContext } from "../context/ShopContext.jsx";
 
 const Navbar = () => {
-  const { getCartCount, navigate, token, setToken, setCartItems } = useContext(ShopContext);
+  const { getCartCount, navigate, event, token, setToken, setCartItems } = useContext(ShopContext);
 
   const handleLogout = () => {
     navigate('/login');
     setToken('');
     setCartItems({});
+    event.close()
     localStorage.removeItem('token');
   };
 
