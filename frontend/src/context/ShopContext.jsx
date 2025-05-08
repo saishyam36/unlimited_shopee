@@ -13,6 +13,7 @@ const ShopContextProvider = (props) => {
     const backendUrl = import.meta.env.VITE_Unlimited_BACKEND_URL;
     const [products, setProducts] = useState([]);
     const [token, setToken] = useState(null);
+    const [orderUpdated, setOrderUpdated] = useState(false);
 
     const connectToOrderStatusStream = (token) => {
         if (!token) {
@@ -25,6 +26,7 @@ const ShopContextProvider = (props) => {
         eventSource.onmessage = function (event) {
             const data = JSON.parse(event.data);
             console.log('Message from server:', data);
+            setOrderUpdated(true);
             message.success(data.message)
         };
 
@@ -51,11 +53,11 @@ const ShopContextProvider = (props) => {
                 { headers: { token } }
             );
             message.success(response.data.message);
+            getCartItems(token);
         } catch (error) {
             message.error(error.response.data.message);
             console.log('Error adding item to cart:', error);
         }
-        getCartItems(token);
     }
 
     const updateCart = async (itemId, size, quantity) => {
@@ -156,25 +158,27 @@ const ShopContextProvider = (props) => {
 
     useEffect(() => {
         getProductsData();
-    }, []);
-
-    useEffect(() => {
         const storedToken = localStorage.getItem('token');
         if (!token && storedToken) {
             setToken(storedToken);
-            getCartItems(storedToken);
             connectToOrderStatusStream(storedToken);
         }
     }, []);
+    
+    useEffect(() => {
+        if (token) {
+            getCartItems(token);
+        }
+    }, [token]);
 
 
     const value = useMemo(() => ({
         products, currency, deliveryFee, cartItems, addToCart, setSelectedPaymentMethod, selectedPaymentMethod,
         getCartCount, updateCart, deleteCartItem, getCartAmount, navigate,
-        token, setToken, backendUrl, setCartItems
+        token, setToken, backendUrl, setCartItems,orderUpdated, setOrderUpdated
     }), [products, currency, deliveryFee, addToCart, cartItems, setSelectedPaymentMethod, selectedPaymentMethod,
         getCartCount, updateCart, deleteCartItem, getCartAmount, navigate
-        , token, setToken, backendUrl, setCartItems]);
+        , token, setToken, backendUrl, setCartItems, orderUpdated, setOrderUpdated]);
 
     return (
         <ShopContext.Provider value={value}>

@@ -1,19 +1,23 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
-import { Row, Col, Card, Button, Space, Typography, message } from 'antd';
+import { Row, Col, Card, Button, Space, Typography, message, Spin } from 'antd';
 import Title from "../components/Title";
 import axios from "axios";
 import { formatDate } from "../utils/common";
 
 const Orders = () => {
-  const { products, backendUrl, token, currency } = useContext(ShopContext);
+  const { products, backendUrl, currency, orderUpdated, setOrderUpdated } = useContext(ShopContext);
   const [cartData, setCartData] = useState([]);
   const { Text } = Typography;
+  const [loading, setLoading] = useState(true);
 
   const cartGrid = () => {
     if (cartData.length >= 1) {
       return cartData.map((cartItem, index) => {
         const item = products.find(product => product._id === cartItem._id);
+        if (!item) {
+          return <Col key={index} md={24} lg={24}><div>Product information not found.</div></Col>;
+        }
         return (
           <Col key={index} md={24} lg={24}>
             <Card size="small">
@@ -61,11 +65,12 @@ const Orders = () => {
     }
   };
 
-  const getOrderData = async () => {
+  const getOrderData = async (token) => {
     if (!token) {
       message.error('Please login to view your orders');
       return;
     }
+    setLoading(true)
     try {
       const response = await axios.post(`${backendUrl}/order/userorders`, {}, { headers: { token } });
       const orderData = response.data.orders;
@@ -87,11 +92,20 @@ const Orders = () => {
         message.error('Something went wrong!');
       }
       console.log('Error fetching orders:', error);
+    } finally {
+      setLoading(false);
     }
   }
 
   useEffect(() => {
-    getOrderData();
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
+      getOrderData(storedToken);
+      console.log('rendered')
+    } else {
+      message.error('Please login to view your orders');
+      setLoading(false);
+    }
   }, [])
 
   return (
@@ -99,9 +113,18 @@ const Orders = () => {
       <div className="text-center pb-10">
         <Title text1={'My'} text2={'Orders'}></Title>
       </div>
-      <Row gutter={[16, 16]}>
-        {cartGrid()}
-      </Row>
+      {loading ? (
+        <div className="text-center">
+          <Spin tip="Loading..." size="large">
+            <div style={{ marginTop: 20 }}>
+            </div>
+          </Spin>
+        </div>
+      ) : (
+        <Row gutter={[16, 16]}>
+          {cartGrid()}
+        </Row>
+      )}
     </div>
   )
 }
