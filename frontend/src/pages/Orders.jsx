@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
-import { Row, Col, Card, Button, Space, message, Spin, Tag } from 'antd';
+import { Row, Col, Card, Button, Space, message, Tag, Skeleton } from 'antd';
 import Title from "../components/Title";
 import axios from "axios";
 import { formatDate } from "../utils/common";
@@ -29,6 +29,23 @@ const Orders = () => {
 
 
   const cartGrid = () => {
+    if (loading) {
+      // Render skeleton loading for each potential cart item
+      return Array.from({ length: 3 }).map((_, index) => ( 
+        <Col key={`skeleton-${index}`} md={24} lg={24}>
+          <Card size="default">
+            <Row gutter={5} align="middle">
+              <Col md={2} lg={3}>
+                <Skeleton.Avatar active size={80} shape="square"/>
+              </Col>
+              <Col md={20} lg={21}>
+                <Skeleton paragraph={{ rows: 2 }} active />
+              </Col>
+            </Row>
+          </Card>
+        </Col>
+      ));
+    }
     if (cartData.length >= 1) {
       return cartData.map((cartItem, index) => {
         const item = products.find(product => product._id === cartItem._id);
@@ -137,18 +154,9 @@ const Orders = () => {
       <div className="text-center pb-10">
         <Title text1={'My'} text2={'Orders'}></Title>
       </div>
-      {loading ? (
-        <div className="text-center">
-          <Spin tip="Loading..." size="large">
-            <div style={{ marginTop: 20 }}>
-            </div>
-          </Spin>
-        </div>
-      ) : (
-        <Row gutter={[16, 16]}>
-          {cartGrid()}
-        </Row>
-      )}
+      <Row gutter={[16, 16]}>
+        {cartGrid()}
+      </Row>
     </div>
   )
 }
