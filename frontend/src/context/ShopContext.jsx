@@ -15,6 +15,7 @@ const ShopContextProvider = (props) => {
     const [token, setToken] = useState(null);
     const [orderUpdated, setOrderUpdated] = useState(false);
     const [event, setEvent] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const connectToOrderStatusStream = (token) => {
         if (!token) {
@@ -78,6 +79,7 @@ const ShopContextProvider = (props) => {
 
     const getCartItems = async (token) => {
         try {
+            setLoading(true);
             const response = await axios.post(`${backendUrl}/cart/get`, {}, { headers: { token } });
             if (response.status === 200) {
                 setCartItems(response.data.cartData);
@@ -85,6 +87,8 @@ const ShopContextProvider = (props) => {
         } catch (error) {
             message.error(error.response.data.message);
             console.log('Error fetching cart items:', error);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -166,17 +170,19 @@ const ShopContextProvider = (props) => {
 
     useEffect(() => {
         if (token) {
+            setLoading(true);
             getCartItems(token);
+            setLoading(false);
             connectToOrderStatusStream(token);
         }
     }, [token]);
 
     const value = useMemo(() => ({
         products, currency, deliveryFee, cartItems, addToCart, setSelectedPaymentMethod, selectedPaymentMethod,
-        getCartCount, updateCart, deleteCartItem, getCartAmount, navigate,
+        getCartCount, updateCart, deleteCartItem, getCartAmount, navigate, loading, setLoading,
         token, setToken, backendUrl, setCartItems, orderUpdated, setOrderUpdated, event
     }), [products, currency, deliveryFee, addToCart, cartItems, setSelectedPaymentMethod, selectedPaymentMethod,
-        getCartCount, updateCart, deleteCartItem, getCartAmount, navigate
+        getCartCount, updateCart, deleteCartItem, getCartAmount, navigate, loading, setLoading
         , token, setToken, backendUrl, setCartItems, orderUpdated, setOrderUpdated, event]);
 
     return (

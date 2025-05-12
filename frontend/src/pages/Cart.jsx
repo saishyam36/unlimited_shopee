@@ -1,13 +1,13 @@
 // import React from 'react'
 import { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
-import { Row, Col, Card, Button, InputNumber, Space, Typography, Empty } from 'antd';
+import { Row, Col, Card, Button, InputNumber, Space, Typography, Empty, Skeleton } from 'antd';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import Title from "../components/Title";
 import CartTotal from "../components/CartTotal";
 
 const Cart = () => {
-  const { products, currency, cartItems, updateCart,
+  const { products, currency, loading, setLoading, cartItems, updateCart,
     deleteCartItem } = useContext(ShopContext);
 
   const [cartData, setCartData] = useState([]);
@@ -21,6 +21,23 @@ const Cart = () => {
   };
 
   const cartGrid = () => {
+    if (loading) {
+      // Render skeleton loading for each potential cart item
+      return Array.from({ length: 2 }).map((_, index) => (
+        <Col key={`skeleton-${index}`} md={24} lg={24}>
+          <Card size="default">
+            <Row gutter={5} align="middle">
+              <Col md={2} lg={3}>
+                <Skeleton.Avatar active size={80} shape="square" />
+              </Col>
+              <Col md={20} lg={21}>
+                <Skeleton paragraph={{ rows: 2 }} active />
+              </Col>
+            </Row>
+          </Card>
+        </Col>
+      ));
+    }
     if (cartData.length >= 1) {
       return cartData.map((cartItem, index) => {
         const item = products.find(product => product._id === cartItem._id);
@@ -69,10 +86,9 @@ const Cart = () => {
           </Col>
         )
       })
-    }
-    else {
+    } else if (!loading && cartData.length < 1) {
       return (
-        <Col span={24} >
+        <Col span={24}>
           <Empty
             style={{ height: 300, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
             className="pt-10"

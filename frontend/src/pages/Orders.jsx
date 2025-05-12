@@ -30,7 +30,7 @@ const Orders = () => {
 
   const cartGrid = () => {
     if (loading) {
-      // Render skeleton loading for each potential cart item
+      // Render skeleton loading for each potential order item
       return Array.from({ length: 3 }).map((_, index) => ( 
         <Col key={`skeleton-${index}`} md={24} lg={24}>
           <Card size="default">
