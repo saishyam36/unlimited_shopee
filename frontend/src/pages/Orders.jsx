@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
-import { Row, Col, Card, Button, Space, Typography, message, Spin } from 'antd';
+import { Row, Col, Card, Button, Space, message, Spin, Tag } from 'antd';
 import Title from "../components/Title";
 import axios from "axios";
 import { formatDate } from "../utils/common";
@@ -8,8 +8,25 @@ import { formatDate } from "../utils/common";
 const Orders = () => {
   const { products, backendUrl, currency, orderUpdated, setOrderUpdated } = useContext(ShopContext);
   const [cartData, setCartData] = useState([]);
-  const { Text } = Typography;
   const [loading, setLoading] = useState(true);
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'Order Placed':
+        return 'processing';
+      case 'Packing':
+        return 'geekblue';
+      case 'Shipped':
+        return 'gold';
+      case 'Out for delivery':
+        return 'lime';
+      case 'Delivered':
+        return 'green';
+      default:
+        return 'default';
+    }
+  };
+
 
   const cartGrid = () => {
     if (cartData.length >= 1) {
@@ -45,7 +62,7 @@ const Orders = () => {
                     </Col>
                     <Col>
                       <Space align="center">
-                        <Text className="text-lg" type="success">{cartItem.status}</Text>
+                        <Tag color={getStatusColor(cartItem.status)} className="font-medium text-sm" bordered style={{ height: '30px', minWidth: '80px', lineHeight: '30px', padding: '0 15px' }}>{cartItem.status}</Tag>
                       </Space>
                     </Col>
                     <Col>
@@ -107,13 +124,13 @@ const Orders = () => {
     }
   }, [])
 
-  useEffect(()=>{
+  useEffect(() => {
     const storedToken = localStorage.getItem('token');
     if (orderUpdated) {
       getOrderData(storedToken);
       setOrderUpdated(false)
     }
-  },[orderUpdated])
+  }, [orderUpdated])
 
   return (
     <div className="pb-20">
