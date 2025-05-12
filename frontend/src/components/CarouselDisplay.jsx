@@ -28,7 +28,7 @@ const carouselData = [
 
 const CarouselDisplay = () => {
     return (
-        <Carousel arrows infinite={true} autoplay={{ dotDuration: true }} autoplaySpeed={5000}>
+        <Carousel infinite={true} autoplay={{ dotDuration: true }} speed={4000} autoplaySpeed={5000}>
             {carouselData.map((item, index) => (
                 <div key={item.id} className="carousel-content">
                     <Card hoverable className="carousel-card">
